@@ -1,0 +1,2508 @@
+/* css cho thêm mới sản phẩm */
+.createProduct {
+  width: 450px;
+  margin: 0 auto;
+  box-shadow: 0 0 8px 2px rgb(216, 214, 216);
+  border-radius: 20px;
+}
+
+.iteam-menu.icon li {
+  margin: 0 10px;
+}
+
+::placeholder {
+  color: #999;
+
+  font-style: italic;
+
+  font-size: 14px;
+}
+
+
+.contentChat .right {
+  display: flex;
+  justify-content: end;
+}
+
+.contentChat .avatar {
+  height: 50px;
+}
+
+.contentChat .avatar img {
+  border-radius: 50%;
+}
+
+.contentChat .eachChat {
+  display: flex;
+  align-items: center;
+  padding: 7px 0;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+.eachChat .avatar{
+  display: flex;
+  align-items: center;
+}
+
+.contentChat .eachChat :hover {
+  cursor: pointer;
+}
+
+.eachChat .name {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: large;
+}
+
+.blockFind .back {
+  margin-right: 10px;
+}
+
+.blockFind .back:hover {
+  cursor: pointer;
+}
+
+
+
+.blockFind .find {
+  flex-grow: 1;
+}
+
+.contentChat .eachChat>div {
+  padding: 0 5px;
+
+}
+
+.contentChat .eachChat:hover {
+  background-color: rgb(53, 51, 51);
+}
+
+.myMessage {
+  background: #1592f1;
+  max-width: 70%;
+  margin: 5px 0;
+  padding: 3px 10px;
+  border-radius: 20px;
+  width: auto;
+  display: inline-block;
+  font-family: 'Times New Roman', Times, serif;
+
+}
+
+.spaceCreateProduct {
+  margin: 40px 0;
+  min-height: calc(100vh - 100px);
+}
+
+.createProduct form {
+  padding: 10px 20px 30px;
+  background-color: white;
+  border-radius: 0 0 20px 20px;
+}
+
+
+.createProduct .title {
+  height: 100px;
+  background-color: #1592f1;
+  border-radius: 20px 20px 0 0;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.createProduct .title h4 {
+  color: #fff;
+  line-height: 100px;
+  text-align: center;
+}
+
+.createProduct form input {
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  padding-left: 20px;
+  background-color: white;
+  box-shadow: 0 0 5px rgb(171, 168, 168);
+
+}
+
+.createProduct form button {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.createProduct form label {
+  margin-left: 10px;
+}
+
+
+.slide {
+  width: 70vw;
+  height: calc(100vh - 100px);
+  position: relative;
+  background-color: #f5f5f5;
+  box-shadow: 20px 15px 30px gray;
+  border-radius: 0 20px 20px 0px;
+
+
+}
+
+.spaceFeetback .content form input:nth-child(1) {
+  border: none;
+  border-bottom: 2px solid rgb(219, 214, 214);
+  outline: none;
+}
+
+.spaceFeetback .content form input:nth-child(2) {
+  background-color: #6c98ef;
+  color: white;
+  border: none;
+  border-bottom: 2px solid rgb(219, 214, 214);
+}
+
+
+.toasts {
+  position: fixed;
+  top: 150px;
+  right: 0;
+  width: 350px;
+  height: auto;
+  max-height: calc(100vh - 100px);
+  display: block;
+  border: none;
+  overflow: hidden;
+  z-index: 3;
+}
+.personFeetback .name {
+  padding-left: 5px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+.option .contact:hover {
+  cursor: pointer;
+}
+
+
+.contentFeetback {
+  padding-left: 45px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.personFeetback {
+  display: flex;
+  align-items: center;
+}
+
+.spaceFeetback .content {
+  padding-left: 20px;
+}
+
+.spaceFeetback {
+  margin-bottom: 50px;
+  background-color: white;
+  padding: 0 20px 20px 20px;
+}
+
+.spaceFeetback .title {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  line-height: 50px;
+  height: 50px;
+  box-sizing: border-box;
+  font-size: large;
+}
+
+
+
+.message {
+  height: 70px;
+  align-items: center;
+  margin: auto;
+  box-shadow: 0 0 5px 1px rgba(196, 191, 191);
+  margin-bottom: 30px;
+  transform: translateX(calc(100% + 30px));
+  transition: all linear 0.5s;
+  background-color: white;
+  position: relative;
+  margin-right: 20px;
+  z-index: 3;
+  animation: tras 0.5s ease forwards, display 1s 4s linear forwards;
+}
+.spaceProductsAtPage{
+  min-height: calc(100vh - 100px);
+  padding: 30px 0;
+  position: relative;
+}
+.message .icon {
+  width: 10px;
+  height: 10px;
+}
+
+.page{
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  left: 0;
+  margin-bottom: 50px;
+}
+.page div{
+  margin: 0 10px;
+  border: 1px solid gray;
+  padding: 5px 15px;
+}
+.page div:hover{
+  cursor: pointer;
+}
+.page .active{
+  background-color: rgb(244, 55, 55);
+}
+
+.message.error {
+  border-left: 5px solid rgb(230, 23, 23);
+}
+
+.message.succes {
+  border-left: 5px solid green;
+}
+
+.message.succes .icon {
+  background-color: green;
+}
+
+.message.error .icon {
+  background-color: red;
+}
+
+.message .content {
+  flex: 1;
+  padding-left: 2px;
+
+}
+
+.message .content .title {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.message .content .text {
+  font-size: 15px;
+}
+
+
+.message .icon {
+  margin: 0 10px;
+  border-radius: 50%;
+
+}
+
+@keyframes tras {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% +30px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes display {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+.slide .item {
+  width: 200px;
+  height: 300px;
+  position: absolute;
+  transform: translate(0, 50%);
+  border-radius: 20px;
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  transition: 1s;
+  box-shadow: 15px 15px 20px rgb(43, 43, 43);
+  background-repeat: no-repeat;
+
+}
+
+.spaceSlide {
+  width: 100%;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+
+}
+
+.spaceSlide {
+  /* background-color: #0f0b0b; */
+}
+
+.slide .item:nth-child(1),
+.slide .item:nth-child(2) {
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 20px 20px 0;
+
+}
+
+.slide .item:nth-child(3) {
+  left: calc(60% + 250px);
+}
+
+.slide .item:nth-child(4) {
+  left: calc(60% + 500px);
+}
+
+.slide .item:nth-child(n+5) {
+  left: calc(60% + 750px);
+  opacity: 0;
+}
+
+
+
+.seeMore {
+  display: flex;
+  justify-content: center;
+}
+
+.seeMore div {
+  background-color: white;
+  padding: 10px 60px;
+  box-shadow: 0 0 5px rgb(181, 180, 180);
+  color: rgb(239, 104, 104);
+}
+
+.seeMore div:hover {
+  background-color: whitesmoke;
+  cursor: pointer;
+}
+
+.listProduct {
+  padding: 20px 0;
+  background-color: whitesmoke;
+}
+
+
+.SpaceStatistical {
+  min-height: calc(100vh - 100px);
+
+}
+
+
+.listProduct .items {
+  margin: 15px 0;
+}
+
+
+/* css cho đăng nhập */
+/* styleLogin.css */
+
+.Loggin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0;
+  background-color: whitesmoke;
+  position: relative;
+  min-height: calc(100vh - 100px);
+}
+
+.formLogin {
+  width: 400px;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(73, 73, 74, 0.4);
+  transition: box-shadow 0.3s ease;
+  /* Hiệu ứng mượt mà cho box-shadow */
+}
+
+.formLogin:hover {
+  box-shadow: 0 0 20px rgba(155, 155, 158, 0.6);
+  /* Hiệu ứng khi hover */
+}
+
+.formLogin h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  color: #0ba311;
+}
+
+.formLogin label {
+  margin-bottom: 10px;
+
+  font-size: 16px;
+  color: #555;
+  box-sizing: border-box;
+  transition: color 0.3s ease;
+  /* Hiệu ứng mượt mà khi thay đổi màu */
+  margin-left: 10px;
+
+}
+
+.spaceMyBills {
+  min-height: calc(100vh - 100px);
+  margin: 40px 0;
+}
+
+.formLogin input[name="passWord"],
+.formLogin input[name="userName"] {
+  outline: none;
+  height: 40px;
+  width: 100%;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding-left: 20px;
+  transition: border-color 0.3s ease;
+  /* Hiệu ứng mượt mà khi focus */
+}
+
+.formLogin input[name="password"]:focus,
+.formLogin input[name="userName"]:focus {
+  border-color: #4caf50;
+}
+
+#seePassword {
+  position: relative;
+  margin-left: 5px;
+  top: 2px;
+}
+
+.formLogin input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* Hiệu ứng mượt mà khi hover */
+}
+
+
+.formLogin a {
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+
+  text-decoration: none;
+  transition: color 0.3s ease;
+  /* Hiệu ứng mượt mà khi hover */
+}
+
+.formLogin a:hover {
+  color: #4caf50;
+}
+
+
+/* css cho đăng ký */
+.spaceRegister {
+  padding: 70px 0;
+  background-color: whitesmoke;
+  min-height: calc(100vh - 100px);
+  position: relative;
+}
+
+.spaceRegister .formRegister .title {
+  height: 80px;
+  background-color: rgb(70, 153, 156);
+  border-radius: 10px 10px 0 0;
+
+}
+
+.spaceRegister .title h4 {
+  color: #fff;
+  margin: 0;
+  line-height: 80px;
+  text-align: center;
+
+
+}
+
+.formRegister {
+  height: auto;
+  margin: 0 auto;
+  max-width: 500px;
+  border-radius: 10px;
+}
+
+
+
+.formRegister form {
+
+  margin: 0 auto;
+  box-shadow: 0px 0px 4px #9e9e9e;
+  padding: 20px 30px 30px 30px;
+  border-radius: 0 0 10px 10px;
+  background-color: white;
+
+}
+
+.formRegister form label {
+  margin-bottom: 5px;
+  margin-left: 8px;
+  color: black;
+}
+
+.formRegister form input {
+  margin-bottom: 7px;
+  border: 1px solid seagreen;
+}
+
+.formRegister form input[type]:not([type="checkbox"]) {
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+
+}
+
+.formRegister form input[type="checkbox"] {
+  margin-left: 10px;
+  margin-right: 3px;
+
+}
+
+.formRegister form button[type="submit"] {
+  display: block;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* css cho footer */
+.footer img {
+  height: 200px;
+  width: auto;
+}
+
+.footer {
+  padding: 20px 0px;
+  background-color: black;
+  display: flex;
+  color: #fff;
+  justify-content: space-evenly
+}
+
+.footer h5 {
+  color: wheat;
+}
+
+.footer p {
+  color: gainsboro;
+}
+
+/* css cho header */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  justify-content: center;
+}
+
+.header {
+  height: 100px;
+  background-color: #000000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  /* overflow: hidden; */
+  z-index: 10;
+}
+
+
+.logo img {
+  height: 100px;
+  width: auto;
+}
+
+.header .menu .iteam-menu>li {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.header .menu .iteam-menu>li>a {
+  position: relative;
+  top: 5px;
+  color: #8d58ef;
+  transition: all 0.3s ease;
+
+}
+
+.header .form-search {
+  display: flex;
+  align-items: center;
+}
+
+.header .form-search form {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.spaceProductAtCategory {
+  min-height: calc(100vh - 100px);
+  padding: 20px;
+}
+
+
+.header .form-search form input {
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 20px;
+  height: 100%;
+  border-radius: 20px;
+  border: 2px solid #6f42c1;
+
+}
+
+.header .form-search form input:focus {
+  box-shadow: 0 0 8px 3px #6f42c1;
+
+
+}
+
+
+.header .form-search form button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 0 20px 20px 0;
+  color: #fff;
+  background: #6f42c1;
+  border: none;
+  width: 30%;
+
+}
+
+.header .menu .iteam-menu {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header .menu .iteam-menu>li {
+  position: relative;
+}
+
+.header .menu .iteam-menu>li::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -3px;
+  display: none;
+  background-color: #6e2de8;
+  box-shadow: 0 0 8px 1px #a88ae0;
+}
+
+.header .menu .iteam-menu>li:hover::after {
+  display: block;
+}
+
+.header .menu .iteam-menu>li:hover>a {
+  text-shadow: 5px 5px 8px #6f42c1;
+  color: red;
+  top: -0.3px;
+  text-shadow: 0 0 10px #d09f1a, 0 0 20px #ab4813, 0 0 30px #00E5FF, 0 0 40px #00BFFF, 0 0 70px #00BFFF, 0 0 80px #00BFFF, 0 0 100px #00BFFF, 0 0 150px #00BFFF;
+}
+
+.img-user,
+.personFeetback .avatar,
+.img-cart {
+  height: 40px;
+  border-radius: 20px;
+}
+
+.feetbacks {
+  padding: 15px 0;
+}
+
+.personFeetback .avatar img {
+  border-radius: 20px;
+}
+
+.img-manage ,.img-user ,.avatar img {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+.img-user{
+  border: 3px solid white;
+}
+
+
+.user {
+  position: relative;
+}
+
+.user:hover .dropdownmenu,
+.manage:hover .dropdownmenu {
+  display: block;
+}
+
+.dropdownmenu {
+  position: absolute;
+  top: 130%;
+  z-index: 9;
+  background-color: #000000;
+  width: 150px;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 8px 1px white;
+  display: none;
+  left: -20px;
+}
+
+.table th,
+.table td:not(:nth-child(2)) {
+  text-align: center;
+}
+
+.dropdownmenu li {
+  padding: 0 10px;
+  display: block;
+}
+
+.dropdownmenu li:hover {
+  background-color: rgb(53, 46, 38);
+
+}
+
+.dropdownmenu li a {
+  color: #fff;
+  padding-left: 10px;
+  width: 100%;
+  display: block;
+  padding: 10px 0;
+
+}
+
+.dropdownmenu li:hover a {
+  color: #8d62de;
+}
+
+.dropdownmenu::before {
+  position: absolute;
+  content: "";
+  height: 30px;
+  width: 100%;
+  bottom: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.SpaceEdit {
+  padding: 70px 0;
+  min-height: calc(100vh - 100px);
+  background-color: whitesmoke;
+
+}
+
+.SpaceEdit form {
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.warning {
+ margin-bottom: 5px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(233, 90, 90);
+
+}
+
+.formEdit {
+  width: 500px;
+  height: auto;
+  box-shadow: 0 0 8px 2px #d1cece;
+  margin: 0 auto;
+  border-radius: 5px;
+
+}
+
+.formEdit .title {
+  height: 100px;
+  background-color: #1c97f5;
+  border-radius: 5px 5px 0 0;
+}
+
+.formEdit .title h4 {
+  color: white;
+  font-size: x-large;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  line-height: 100px;
+  text-align: center;
+}
+
+.SpaceEdit form label {
+  margin-left: 10px;
+  padding-bottom: 5px;
+  font-size: 17px;
+  color: black;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.SpaceEdit form input {
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid gray;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 15px;
+}
+
+
+
+
+.opptionBinproduct {
+  display: flex;
+  justify-content: space-between;
+}
+
+.SpaceBin {
+  margin-top: 40px;
+}
+
+.mesageBin {
+  font-size: 17px;
+  color: black;
+  margin: 0;
+  text-align: center;
+}
+
+
+
+.card-body {
+  padding: 10px 0px;
+
+}
+
+.card img {
+  object-fit: cover;
+  width: 100%;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+
+}
+
+.card {
+  border: 1px solid rgb(204, 201, 201);
+  margin-bottom: 10px;
+  min-height: 250px;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 5px 5px 10px rgb(182, 181, 181);
+  transition: all 1s ease;
+  position: relative;
+
+
+}
+
+
+
+
+.card:hover {
+  position: relative;
+  top: -5px;
+}
+
+
+.information {
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #c9c5c5;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: width 0.3s, height 0.3s;
+
+}
+
+.information.oder {
+  width: 600px;
+  height: 230px;
+  z-index: 300;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 30px 30px;
+}
+
+
+p,
+span,
+h4,
+h6,
+h3 {
+  padding: 0;
+  margin: 0;
+}
+
+.information .title h3,
+.information .title p {
+  text-align: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0c0b0b;
+  opacity: 0.8;
+  display: block;
+  z-index: 2;
+}
+
+.reviewProduct {
+  display: flex;
+
+}
+
+.reviewProduct .imgProduct {
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  margin-right: 30px;
+}
+
+.imgProduct img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+.reviewProduct span {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+
+.title .note {
+  color: red;
+}
+
+.information .title {
+  margin-bottom: 20px;
+
+}
+
+.information .reviewProduct {
+  margin-bottom: 20px;
+  background-color: #c7c2c2;
+}
+
+.information .confirt {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+}
+
+.information .close {
+  position: absolute;
+  bottom: 10px;
+  right: 130px;
+}
+
+.spaceOderInformation {
+  min-height: calc(100vh - 100px);
+  background-color: whitesmoke;
+  padding: 50px 0;
+}
+
+/* CSS cho phần thông tin nhận hàng */
+
+
+/* CSS cho nút nhập thông tin */
+.btnInsertinformation {
+  background-color: #14aaeb;
+  color: #fff;
+  padding: 5px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+
+}
+
+
+/* CSS cho phần sản phẩm và thông tin đơn hàng */
+.informationBotom {
+  display: flex;
+}
+
+.informationBotom .imgProduct img {
+  border-radius: 15px;
+}
+
+
+.imgProduct {
+  width: 450px;
+  height: 450px;
+
+}
+
+.imgProduct img {
+  width: 100%;
+  height: 100%;
+}
+
+
+.informationoder p {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  margin: 15px 0;
+  font-size: initial;
+
+}
+
+.informationoder h4 {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: 15px 0px;
+  font-size: xx-large;
+
+
+}
+
+
+.informationbuy {
+ 
+  border-radius: 15px;
+
+}
+
+.informationoder {
+  flex: 1;
+  box-sizing: border-box;
+  padding-left: 30px;
+
+}
+
+.price h3 {
+  color: rgb(244, 24, 24);
+  font-size: 1.5em;
+  /* Kích thước chữ */
+}
+
+.transport {
+  margin-top: 10px;
+  font-style: italic;
+  /* Chữ in nghiêng */
+}
+
+/* CSS cho phần số lượng sản phẩm */
+.quantity {
+  margin-top: 10px;
+}
+
+.quantity button {
+  color: black;
+  padding: 0 12px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  font-size: 17px;
+  background-color: white;
+
+}
+
+.chooseQuantity button {
+  border: 1px solid gray;
+  padding: 0 15px;
+  height: auto;
+  color: black;
+  font-size: 15px;
+  background-color: white;
+  margin: 0 10px;
+}
+
+
+
+/* CSS cho nút thêm vào giỏ hàng và thanh toán */
+.cartandpay button {
+  background-color: rgb(231, 30, 30);
+  color: #fff;
+  padding: 10px 5px;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  margin-right: 30px;
+  border-radius: 5px;
+  margin-top: 50px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.cartandpay button:hover {
+  background-color: rgb(230, 18, 18);
+}
+
+.inserInformation input {
+  height: 40px;
+  box-sizing: border-box;
+  padding-left: 10px;
+  background-color: whitesmoke;
+  display: block;
+  border-radius: 20px;
+  margin: 8px 0;
+  padding: 0 20px;
+  border: 1px solid gray;
+  outline: none;
+}
+
+
+
+
+.inserInformation.active {
+  height: 200px;
+
+}
+
+.addCategory button {
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: #e73724;
+  border: none;
+  color: white;
+
+}
+
+.myoder .image {
+  flex: 1;
+}
+
+.informationmyOder {
+  flex: 7;
+}
+
+.informationmyOder div:nth-child(1) {
+  font-family: cursive;
+}
+
+.informationmyOder .option {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+
+
+}
+
+.informationmyOder span {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.informationmyOder .option button {
+  border: none;
+  margin-left: 20px;
+  padding: 10px 10px;
+  background-color: rgb(243, 96, 96);
+  color: white;
+
+
+}
+
+.myoder {
+  max-height: 150px;
+  height: auto;
+  position: relative;
+  padding: 10px;
+  box-sizing: border-box;
+
+
+}
+
+.myoder .image img {
+  border-radius: 10px;
+}
+
+.bill {
+  max-height: 260px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.bill,
+.myoder {
+  display: flex;
+  border: 1px solid #ccc;
+  margin: 15px 0;
+
+
+  /* height: auto; */
+  border-radius: 10px;
+  position: relative;
+
+  width: 100%;
+  background-color: white;
+}
+
+
+.bodyContent .delete {
+  margin-right: 50px;
+}
+
+.bodyContent .delete .btn {
+  background-color: whitesmoke;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.bodyContent .delete .btn:hover {
+  cursor: pointer;
+}
+
+
+.bodyContent .childrent {
+  display: flex;
+  align-items: center;
+}
+
+.bodyContent {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bodyContent .name {
+  flex-basis: 40%;
+}
+
+.mycart .item {
+  display: flex;
+  border: 1px solid #ccc;
+  margin: 10px 0px;
+  padding: 10px;
+  max-height: 260px;
+  height: 150px;
+  border-radius: 10px;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: white;
+
+}
+
+.bodyContent .changeQuantity input {
+  outline: none;
+  padding: 0 5px;
+  box-sizing: content-box;
+}
+
+.bodyContent .changeQuantity button {
+  border: 1px solid gray;
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+.mycart .item img {
+  border-radius: 10px;
+  margin: 0 20px;
+}
+
+.bill .image {
+  margin-right: 10px;
+  height: auto;
+  flex: 1;
+
+}
+
+.informationBill .product {
+  flex: 2;
+  border-right: 2px solid whitesmoke;
+}
+
+.informationBill .customer {
+  flex: 3;
+  padding-left: 10px;
+}
+
+.informationBill {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.informationBill span {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding-right: 5px;
+}
+
+.bill .image img {
+  height: 100%;
+  border-radius: 8px;
+}
+
+.bill .informationBill {
+  flex: 5;
+
+}
+
+.bill .informationBill p {
+  margin: 0;
+  padding: 5px 0;
+  font-size: 16px;
+}
+
+
+
+.bill .confirm {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: none;
+  color: white;
+  border-radius: 10px 0 10px 0;
+  padding: 10px;
+  background-color: #3498db;
+}
+
+.spaceOderProduct {
+  min-height: calc(100vh - 100px);
+  box-sizing: border-box;
+  padding-top: 50px;
+  background-color: whitesmoke;
+  position: relative;
+}
+
+
+
+
+.informationProduct {
+  display: flex;
+  border-radius: 15px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 0 8px gray;
+
+
+}
+
+.informationProduct img {
+  height: 300px;
+  width: auto;
+  border-radius: 15px 0 0 15px;
+
+}
+
+.productDetail {
+  flex: 1;
+  margin-left: 50px;
+
+  position: relative;
+}
+
+.informationBuyer {
+  height: auto;
+  padding: 20px;
+  border-radius: 15px;
+  border-bottom: transparent;
+  background-color: white;
+  margin-bottom: 15px;
+  box-shadow: 0 0 8px gray;
+  width: 50%;
+  position: relative;
+}
+
+.doneOder {
+  border-radius: 15px 0 15px 0;
+  background-color: #eb412e;
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px 15px;
+  font-size: large;
+  border: none;
+}
+
+
+.btn_saveInformation {
+  background-color: #f53621;
+  cursor: pointer;
+  padding: 5px 7px;
+  color: white;
+  border: none;
+  margin-top: 5px;
+}
+
+
+.informationBuyer div:nth-child(1) {
+  font-size: x-large;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.informationBuyer div {
+  font-family: 'Courier New', Courier, monospace;
+  margin: 5px 0;
+
+}
+
+
+.alterInformation {
+  color: white;
+  background-color: #0ab9f3;
+  padding: 5px 7px;
+  border: none;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  border-radius: 0 15px 0 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+
+.productDetail .name {
+  font-size: x-large;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.productDetail .quantity {
+  margin: 10px 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+}
+
+.productDetail .price {
+  margin: 15px 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.productDetail .transport {
+  margin: 15px 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.totalMoney {
+  position: absolute;
+  bottom: 10px;
+  font-size: large;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+}
+
+
+
+.quantity {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.quantity div {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.category {
+  height: 55px;
+  background-color: white;
+  width: 200px;
+  display: flex;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+
+}
+
+.section>div:nth-child(3) {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.section {
+  position: sticky;
+  bottom: 0;
+  height: 120px;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  box-shadow: 0 0 10px gray;
+}
+
+.section>div {
+  width: 100%;
+  min-height: 40px;
+  height: auto;
+  border-bottom: 1px solid rgb(195, 191, 191);
+
+}
+
+.section span,
+.deleteChecked,
+.section label {
+  font-size: 16px;
+  color: black;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.deleteChecked:hover {
+  cursor: pointer;
+}
+
+.deleteChecked {
+  padding: 5px;
+}
+
+.section button {
+  border: none;
+  height: 100%;
+  padding: 0 15px;
+  color: white;
+  background-color: rgb(248, 50, 50);
+}
+
+
+.section>div:nth-child(3) div:nth-child(1) input {
+  margin-right: 30px;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  top: 3px;
+ 
+  
+}
+
+
+
+.alterInformationBuyer {
+  width: 450px;
+  height: auto;
+  background-color: whitesmoke;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  transition: top 0.5s ease;
+  z-index: 3;
+
+}
+
+.alterInformationBuyer.active {
+
+  width: 450px;
+  height: auto;
+  background-color: whitesmoke;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  border-radius: 5px;
+
+
+}
+
+.chat .close {
+  color: white;
+  flex: 1;
+  display: flex;
+  justify-content: end;
+}
+
+.chat .close svg {
+  width: 15px;
+  height: 15px;
+}
+
+.chat .close:hover {
+  cursor: pointer;
+}
+
+.chat::before {
+  content: "";
+  border: 12px solid;
+  border-color: transparent transparent whitesmoke transparent;
+  position: absolute;
+  top: -24px;
+  z-index: 100;
+  right: 17px;
+}
+
+.chat {
+  color: white;
+  display: block;
+  position: fixed;
+  z-index: 10;
+  background-color: white;
+  width: 350px;
+  height: 500px;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+  box-shadow: 0 0 8px gray;
+  background-color: black;
+
+
+}
+
+.headerChatAdmin,
+.headerChat {
+  height: auto;
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  padding: 0 15px;
+}
+
+.headerChat {
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.headerChat .avatarChat {
+  height: 40px;
+}
+
+.headerChatAdmin .title {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: large;
+  padding: 5px 0 10px 0px;
+}
+
+.headerChatAdmin .find input {
+  height: 30px;
+  border-radius: 0 15px 15px 0;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 10px;
+
+}
+
+.headerChatAdmin .find {
+  overflow: hidden;
+  /* width: 80%; */
+
+  height: 30px;
+  border-radius: 15px;
+
+}
+
+.headerChatAdmin .find .icon {
+  background-color: white;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  border-right: 2px solid rgb(241, 233, 233);
+}
+
+.headerChatAdmin .find svg {
+  width: 16px;
+  height: 16px;
+  color: gray;
+}
+
+
+
+.avatarChat {
+  height: 90%;
+  padding: 0 5px;
+  position: relative;
+}
+
+.chat .contentChat {
+  width: 100%;
+  height: 400px;
+  overflow-y: auto;
+  padding: 15px 15px 10px 15px;
+
+
+}
+
+.contentChat::-webkit-scrollbar {
+  width: 8px;
+  /* Chiều rộng của thanh cuộn */
+}
+
+.contentChat::-webkit-scrollbar-thumb {
+  background-color: #888;
+  /* Màu của nút cuộn */
+  border-radius: 4px;
+  /* Bo tròn nút cuộn */
+}
+
+.contentChat::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+  /* Màu khi di chuột qua */
+}
+
+
+.footerChat {
+  width: 100%;
+
+  position: absolute;
+  bottom: 0;
+  padding: 10px 0;
+  background-color: #000000;
+  border-top: 1px solid gray;
+
+}
+
+
+.icon_opption img {
+  margin: 0 5px;
+}
+
+.iconsend,
+.icon_opption {
+  height: 30px;
+  border-radius: 15px;
+}
+
+.iconsend img,
+.icon_opption img {
+  border-radius: 15px;
+}
+
+.chat form {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+.chat form input {
+  border-radius: 15px;
+  height: 30px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  background-color: rgb(192, 190, 190);
+}
+
+.alterInformationBuyer form {
+  box-sizing: border-box;
+  padding: 25px;
+}
+
+.alterInformationBuyer .title {
+  text-align: center;
+  color: red;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 500;
+  padding: 20px 0;
+  background-color: #d5c8ed;
+  border-radius: 5px 5px 0 0;
+}
+
+.alterInformationBuyer input {
+  display: block;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  border: 1px solid rgb(218, 213, 213);
+  box-sizing: border-box;
+  background-color: white;
+  padding-left: 20px;
+
+}
+
+.section>div:nth-child(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.top3Product {
+  height: 55px;
+  background-color: white;
+  width: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.top3Product h5 {
+  text-align: center;
+  line-height: 55px;
+  color: rgb(225, 78, 78);
+}
+
+.category h5 {
+  flex: 3;
+  margin: 0;
+  text-align: center;
+  color: rgb(225, 78, 78);
+
+}
+
+.category .logoadd {
+  flex: 1;
+}
+
+.category svg {
+  padding: 5px;
+  box-sizing: content-box;
+  border-radius: 50%;
+  background-color: #efeaea;
+  stroke: red;
+}
+
+.category .logoadd:hover {
+  cursor: pointer;
+}
+
+
+.mycart .blockinput {
+  display: flex;
+  align-items: center;
+}
+
+.suggest,
+.spaceMyoder .menu,
+.spaceOderManagement .menu,
+.cart {
+  height: 55px;
+  background-color: white;
+  position: sticky;
+  top: 100px;
+  z-index: 2;
+  box-shadow: 0 0 5px gray;
+
+}
+
+.cart {
+  margin-bottom: 20px;
+
+}
+
+.mycart .item input {
+  width: 25px;
+  height: 25px;
+}
+
+.suggest::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background-color: rgb(225, 78, 78);
+  bottom: 0;
+
+}
+
+
+table th {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: large;
+  font-weight: 600;
+}
+
+table td {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+
+
+}
+
+.suggest h5,
+.cart h5 {
+  text-align: center;
+  line-height: 55px;
+  color: rgb(225, 78, 78);
+}
+
+.priceProduct {
+  position: absolute;
+  bottom: 10px;
+  color: rgb(215, 13, 13);
+}
+
+.spaceOderInformation .infomation {
+  padding: 10px;
+  border-radius: 15px;
+  margin-top: 40px;
+  margin-bottom: 90px;
+}
+
+.infomation {
+  background-color: white;
+  box-shadow: 5px 5px 10px rgb(177, 172, 172);
+}
+
+
+.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Số dòng bạn muốn hiển thị */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3em;
+  /* Tùy chỉnh dựa trên kích thước font và line-height */
+  margin-bottom: 20px;
+}
+
+table td.name:hover {
+  cursor: pointer;
+}
+
+table td a {
+  color: #000000;
+}
+
+.myProducts .price {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.myProducts .card-title {
+  margin-bottom: 0;
+}
+
+.spaceMyaccount {
+  min-height: calc(100vh - 100px);
+  background-color: whitesmoke;
+  padding-top: 30px;
+}
+
+.spaceMyaccount .accountinformation {
+  display: flex;
+}
+
+.navbar .Account {
+  margin: 0 20px;
+
+}
+
+.spaceMyaccount .navbar {
+
+  display: flex;
+  flex-wrap: wrap;
+  background-color: whitesmoke;
+  flex-direction: column;
+  justify-content: start;
+  background-color: white;
+  border-right: 2px solid rgb(211, 210, 210);
+}
+
+.spaceMyaccount .navbar>div {
+  width: 100%;
+}
+
+.spaceMyaccount .navbar .Account {
+  display: flex;
+}
+
+.nameAccount {
+  flex: 1;
+}
+
+.titleAccount,
+.oder,
+.message {
+  display: flex;
+}
+
+.titleAccount,
+.iconOder,
+.iconMessage {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+
+.logoAccount svg {
+  width: 30px;
+  height: 30px;
+}
+
+.logoAccount img,
+.blockSvg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+
+}
+
+.logoAccount {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  border: 2px solid #c6c6c6;
+  margin-right: 10px;
+  background-color: #efefef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.optionInformationAccount {
+  margin-left: 25px;
+
+}
+
+.iconAccount {
+  margin-right: 5px;
+}
+
+svg {
+  stroke: #c6c6c6;
+  width: 25px;
+  height: 25px;
+}
+
+.informationAccountMain {
+  background-color: white;
+  flex: 1;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.informationAccountMain .title {
+  padding: 15px 0;
+  border-bottom: 2px solid #c6c6c6;
+  margin-bottom: 30px;
+}
+
+.informationAccountMain .title span {
+  font-size: 20px;
+}
+
+.informationAccount .item {
+  display: flex;
+  padding-bottom: 30px;
+}
+
+.informationAccount .item .gender {
+  text-align: left;
+}
+
+.informationAccount {
+  flex: 3;
+}
+
+.informationAccount .item div {
+  min-width: 150px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.item .gender input {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  top: 3px;
+  margin-right: 15px;
+  margin-left: 5px;
+}
+
+.item .save {
+  padding: 5px 20px;
+  background-color: #e5301c;
+  color: white;
+  border: none;
+}
+
+.spaceMyaccount .mainContent {
+  display: flex;
+}
+
+.loadImage svg {
+  height: 80px;
+  width: 80px;
+}
+
+.loadImage {
+  position: relative;
+  margin-left: 50px;
+  flex: 2;
+  border-left: 2px solid rgb(216, 215, 215);
+  height: 200px
+}
+
+.loadImage .body {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.loadImage .body svg {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.loadImage .body button {
+  border: 1px solid gray;
+  padding: 8px 10px;
+}
+
+.loadImage .body .blockSvg {
+  width: 113px;
+  height: 113px;
+  border-radius: 50%;
+  background-color: #efefef;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadImage .body button {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  border: 1px solid rgb(189, 182, 182);
+}
+
+.informationAccount .item input[type="text"] {
+  width: 430px;
+  height: 40px;
+  border: 1px solid rgb(175, 172, 172);
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+
+
+.blockAvata {
+  width: 55px;
+  height: 55px;
+
+}
+
+.blockAvata img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.optionInformationAccount div:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.spaceResult {
+  min-height: calc(100vh - 100px);
+}
+
+.spaceMyoder {
+  min-height: calc(100vh - 100px);
+  background-color: whitesmoke;
+}
+
+.spaceMyoder .menu,
+.spaceOderManagement .menu,
+.menuManagement {
+  display: flex;
+  position: sticky;
+
+
+}
+
+.menuManagement {
+  height: 55px;
+  background-color: white;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+  box-shadow: 0 0 5px gray;
+}
+
+.informationmyOder>div {
+  padding-bottom: 10px;
+}
+
+.spaceManagement {
+  min-height: calc(100vh - 100px);
+}
+
+.spaceMyoder .menu div,
+.spaceOderManagement .menu div,
+.menuManagement div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
+  align-items: center;
+}
+
+.spaceOderManagement {
+  min-height: calc(100vh - 100px);
+}
+
+
+
+.spaceMyoder .menu div,
+.spaceOderManagement .menu div,
+.menuManagement div:hover {
+  cursor: pointer;
+}
+
+.menu .line,
+.menuManagement .line,
+.spaceOderManagement .menu .line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  border-radius: 15px;
+  background-color: #d32660;
+  transition: all 0.2s ease;
+}
+
+
+.spaceMycart {
+  min-height: calc(100vh - 100px);
+  background-color: whitesmoke;
+  box-sizing: border-box;
+  padding-top: 40px;
+
+
+}
+
+.categoryBody {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 15px;
+}
+
+.category-item {
+  width: 10%;
+  margin-right: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  height: auto;
+  border: 1px solid rgb(229, 225, 225);
+}
+
+.category-item :hover {
+  cursor: pointer;
+}
+
+.category-item .image {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.category-item img {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+
+}
+
+
+.numberProductsInCart {
+  color: red;
+  font-size: 15px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  padding: 0 10px;
+  background-color: whitesmoke;
+  border-radius: 30px;
+
+}
+
+.bodyContent .delete .btn:hover {
+  background-color: rgb(238, 77, 77);
+  color: white;
+}
+
+.blockLogoCart {
+  position: relative;
+}
+
+.category-item .name {
+  text-align: center;
+  font-size: 17px;
+  color: #0f0b0b;
+}
+
+.top3ProductBody {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 15px;
+  margin-bottom: 20px;
+}
+
+.top3ProductBody-item {
+  width: 30%;
+}
+
+.top3ProductBody-item img {
+  border-radius: 10px;
+}
+
+.modalAddcategory {
+  width: 450px;
+  height: auto;
+  background-color: whitesmoke;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  padding-bottom: 20px;
+  transition: top 0.5s ease
+}
+
+.modalAddcategory.active {
+  width: 450px;
+  height: auto;
+  background-color: whitesmoke;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  border-radius: 5px;
+  padding-bottom: 20px;
+
+}
+
+.lastMessage {
+  font-size: 15px;
+}
+
+.addCategory {
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+.addCategory input {
+  display: block;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  border-radius: 20px;
+  border: 1px solid gray;
+  box-sizing: border-box;
+  background-color: white;
+  padding-left: 20px;
+
+}
+
+.modalAddcategory .title {
+  text-align: center;
+  color: red;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 500;
+  padding: 20px 0;
+  background-color: #d5c8ed;
+  border-radius: 5px 5px 0 0;
+}
+
+
+
+.modalAddcategory form label {
+  padding-left: 10px;
+  font-size: 16px;
+  margin-top: 18px;
+  margin-bottom: 3px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.modalAddcategory form button {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.spaceMyproduct {
+  min-height: calc(100vh - 100px);
+  margin-top: 40px;
+}
+
+.spaceLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
