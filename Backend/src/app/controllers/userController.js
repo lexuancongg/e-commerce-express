@@ -1,11 +1,4 @@
 'use strict'
-const User = require('../models/User.js');
-const product = require('../models/product.js');
-
-const chat = require('../models/chat.js')
-const messageModel = require('../models/message.js')
-const { default: mongoose } = require('mongoose');
-const bill = require('../models/bill.js');
 const homeService = require('../../service/homeService.js');
 const authService = require('../../service/authService.js');
 const productService = require('../../service/productService.js');
@@ -15,23 +8,22 @@ const cartService = require('../../service/cartService.js');
 const feetbackProductService = require('../../service/feetbackProductService.js');
 const chatService = require('../../service/chatService.js');
 const sizeDataGet = 30;
-class HomeContrailer {
+class userController {
     async Home(req, res, next) {
         try {
-            const dataHomePage = await homeService.getDataHomePage(req.params.page);
-            if (!!dataHomePage) {
-                return res.status(200).json(dataHomePage);
+            const dataForHomePage = await homeService.getDataHomePage(req.params.page);
+            if (!!dataForHomePage) {
+                return res.status(200).json(dataForHomePage);
             }
             return res.status(500).json({ message: "có lỗi xảy ra" })
-
         } catch (error) {
             next(error);
         }
     }
 
     register(req, res, next) {
-        const { password, userName, Email, phoneNumber } = req.body;
-        authService.registerUser(password, userName, Email, phoneNumber)
+        const { passWord, userName, Email, phoneNumber } = req.body;
+        authService.registerUser(passWord, userName, Email, phoneNumber)
             .then(result => {
                 if (result.type) {
                     return res.status(200).json(result.data);
@@ -52,40 +44,39 @@ class HomeContrailer {
 
     getInformationProduct(req, res, next) {
         const idProduct = req.params.id;
-        productService.getInformationProductById(idProduct).then(informationResponse => {
-            res.status(informationResponse.status).json(informationResponse.data);
-        }).catch(next)
+        productService.getInformationProductById(idProduct)
+            .then(informationResponse => {
+                res.status(informationResponse.status).json(informationResponse.data);
+            }).catch(next)
     }
 
     checkLoginStatus(req, res, next) {
         const token = req.headers.authorization.split(" ")[1];
-        authService.getStatusAuth(token).then(result => {
-            return res.json(result.data)
-        }).catch(next)
+        authService.getStatusAuth(token)
+            .then(result => {
+                return res.json(result.data)
+            })
+            .catch(next)
     }
 
     payBuyProduct = async (req, res, next) => {
         const { idUser } = req.idUser;
         const idProduct = req.params.id;
         const { informationBuyer, quantity, totalMoney } = req.body
+
         try {
-            const customerIsExists = customerService.findCustomerBuyId(idUser);
+            const customerIsExists = await customerService.findCustomerBuyId(idUser);
             if (customerIsExists) {
-                customerService.updateInformation(idUser, req.body.informationBuyer)
+                customerService.updateInformation(idUser, informationBuyer)
             } else {
-                customerService.createInformationCustomer(idUser, ...req.body.informationBuyer);
+                customerService.createInformationCustomer(idUser, ...informationBuyer);
             }
-            const newBill = new bill(
-                {
-                    idCustomer: idUser, idProduct: idProduct, quantityProduct: req.body.quantity, totalMoney: req.body.totalMoney
-                }
-            );
-            Promise.all([newBill.save(), product.updateOne({ _id: idProduct }, { $inc: { quantity: - parseInt(req.body.quantity) } })])
+            const createBill = billService.createNewBill(idUser, idProduct, quantity, totalMoney);
+            const updateQuantityProduct = productService.updateQuantityProduct(idProduct, quantity, "down")
+            Promise.all([createBill, updateQuantityProduct])
                 .then(([responseBill, responseProduct]) => {
-                    if (responseBill && responseProduct) {
-                        res.status(200).json("thành công")
-                    }
-                }).catch(next)
+                    res.status(200).json("succes")
+                })
         } catch (error) {
             next(error);
         }
@@ -102,23 +93,26 @@ class HomeContrailer {
         }
     }
 
-
     getDataMyAccount(req, res, next) {
         const { idUser } = req.idUser;
-        authService.getInformationAccountBuyId(idUser).then(myAccount => {
-            return res.status(200).json(myAccount)
-        }).catch(next)
+        authService.getInformationAccountBuyId(idUser)
+            .then(myAccount => {
+                if (!myAccount) return res.status(404).json("not found")
+                res.status(200).json(myAccount)
+            }).catch(next)
 
     }
     SearchProducts(req, res, next) {
         const keyWord = req.body.search;
-        productService.findProductByName(keyWord).then(result => {
-            res.cookie('resultSearch', JSON.stringify(result));
-            res.redirect(`http://localhost:3001/ResultSearch`);
-        }).catch(next)
+        productService.findProductByName(keyWord)
+            .then(result => {
+                res.cookie('resultSearch', JSON.stringify(result));
+                res.redirect(`http://localhost:3001/ResultSearch`);
+            }).catch(next)
     }
 
     async getDataMyOder(req, res, next) {
+        console.log("this iss")
         const { idUser } = req.idUser;
         try {
             const myOders = await billService.getInformationOderBuyIdCustomer(idUser);
@@ -131,9 +125,10 @@ class HomeContrailer {
         const { idUser } = req.idUser;
         const idProduct = req.params.id;
         const { quantity } = req.body;
-        cartService.addProductInCart(idUser, idProduct, quantity).then(result => {
-            return res.status(200).json(result)
-        }).catch(next)
+        cartService.addProductInCart(idUser, idProduct, quantity)
+            .then(result => {
+                return res.status(200).json(result)
+            }).catch(next)
     }
 
     async myCart(req, res, next) {
@@ -148,8 +143,10 @@ class HomeContrailer {
     async saveDataAboutAccount(req, res, next) {
         const newDataAccount = req.body;
         try {
-            const message = await authService.saveAccountData(newDataAccount._id, newDataAccount);
-            res.status(200).json(message);
+            const result = await authService.saveAccountData(newDataAccount._id, newDataAccount);
+            if (result.modifiedCount)
+                return res.status(200).json(result);
+            res.status(403).json("found");
         } catch (error) {
             next(error)
         }
@@ -157,12 +154,8 @@ class HomeContrailer {
     async deleteProductInCard(req, res, next) {
         const cardId = req.params.id;
         try {
-            const message = await cartService.deleteProductInCart(cardId);
-            if (message === "Thành công") {
-                return res.status(200).json(message);
-            } else {
-                return res.status(404).json(message);
-            }
+            const result = await cartService.deleteProductInCart(cardId);
+            res.status(200).json(result)
         } catch (error) {
             next(error);
         }
@@ -170,8 +163,8 @@ class HomeContrailer {
     async deletedProductCheckedInCard(req, res, next) {
         const cardIds = req.body.idCardProductChecked;
         try {
-            const message = await cartService.deleteCheckedProductsInCart(cardIds);
-            res.status(200).json(message);
+            const result = await cartService.deleteCheckedProductsInCart(cardIds);
+            res.status(200).json(result);
         } catch (error) {
             next(error);
         }
@@ -223,21 +216,16 @@ class HomeContrailer {
             next(error);
         }
     }
-    myOderWaitConfirm(req, res, next) {
-
-    }
-
+  
 
     async getChats(req, res, next) {
         const { idUser } = req.idUser;
-
         try {
             const myChats = await chatService.getChatsByUserId(idUser);
             if (myChats) {
-                res.status(200).json(myChats);
-            } else {
-                res.status(404).json({ message: "Không tìm thấy trò chuyện." });
+                return res.status(200).json(myChats);
             }
+            res.status(404).json("found");
         } catch (error) {
             next(error);
         }
@@ -256,4 +244,4 @@ class HomeContrailer {
 
 }
 
-module.exports = new HomeContrailer();
+module.exports = new userController();

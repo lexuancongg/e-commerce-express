@@ -1,11 +1,18 @@
 const bill = require("../app/models/bill")
 const product = require("../app/models/product")
 const converDate = require("../until/converDate")
-const customer = require("../app/models/curtomer")
+const customer = require("../app/models/curtomer");
+
+
 
 class billService {
-    createNewBill() {
-
+    createNewBill(idCustomer, idProduct, quantityProduct, totalMoney) {
+        try {
+            const newBill = new bill({ idCustomer, idProduct, quantityProduct, totalMoney });
+            return newBill.save();
+        } catch (error) {
+            throw error
+        }
     }
     async getInformationOderBuyIdCustomer(idCustomer) {
         const myOders = await bill.find({ idCustomer }, { idProduct: 1, totalMoney: 1, quantityProduct: 1, status: 1, createdAt: 1, _id: 1 })
@@ -52,8 +59,8 @@ class billService {
     }
     async getStatistics() {
         try {
-            const responseBill = await bill.findWithDeleted({}, { deleted: 0, updatedAt: 0, deletedAt: 0, __v: 0 });
-            const datas = await Promise.all(responseBill.map(async (bill) => {
+            const listBillsInBin = await bill.findWithDeleted({}, { deleted: 0, updatedAt: 0, deletedAt: 0, __v: 0 });
+            const datas = await Promise.all(listBillsInBin.map(async (bill) => {
                 const [responseCurtomer, responseProduct] = await Promise.all([
                     customer.findOneWithDeleted({ _id: bill.idCustomer }, { fullName: 1 }),
                     product.findOneWithDeleted({ _id: bill.idProduct }, { name: 1, _id: 1 })
@@ -62,8 +69,8 @@ class billService {
                     totalMoney: bill.totalMoney,
                     quantityProduct: bill.quantityProduct,
                     idBill: bill._id,
-                    ...(responseCurtomer?.toObject() ?? {}),
-                    ...(responseProduct?.toObject() ?? {}),
+                    ...(responseCurtomer.toObject() ?? {}),
+                    ...(responseProduct.toObject() ?? {}),
                     dateCreated: converDate(bill.createdAt)
                 };
             }));
@@ -77,30 +84,33 @@ class billService {
     }
     async getDataMybills() {
         try {
-            const responseBill = await bill.find({ status: 'Normal' }, {
+            const listBills = await bill.find({ status: 'Normal' }, {
                 _id: 1, idProduct: 1, idCustomer: 1, quantityProduct: 1, totalMoney: 1, createdAt: 1
-            });
+            }).lean();
 
-            const datas = await Promise.all(responseBill.map(async (bill) => {
-                const [responseCustomer, responseProduct] = await Promise.all([
-                    customer.findOne({ _id: bill.idCustomer }, { fullName: 1, phoneNumberOrder: 1, address: 1 }),
-                    product.findOne({ _id: bill.idProduct }, { name: 1, image: 1, _id: 1, price: 1 })
+            const datas = await Promise.all(listBills.map(async (bill) => {
+                const [resultCustomer, resultProduct] = await Promise.all([
+                    customer.findOne({ _id: bill.idCustomer }, { fullName: 1, phoneNumberOrder: 1, address: 1 }).lean(),
+                    product.findOne({ _id: bill.idProduct }, { name: 1, image: 1, _id: 1, price: 1 }).lean()
                 ]);
-
+                console.log(bill)
                 return {
-                    ...bill?.toObject(),
-                    ...responseCustomer?.toJSON(),
-                    ...responseProduct?.toJSON(),
-                    _idbill: bill._id,
+                    ...(bill ?? {}),
+                    ...(resultCustomer ?? {}),
+                    ...(resultProduct ?? {}),
+                    _idbill: bill._id ?? {},
                     dateOrder: converDate(bill.createdAt)
                 };
             }));
 
+
             return datas;
         } catch (error) {
-            throw error;
+            throw new Error(error)
+
         }
     }
-   
+
+
 }
 module.exports = new billService()

@@ -7,7 +7,9 @@ const chatService = require('../../service/chatService.js');
 class adminControler {
     // thêm sản phẩm
     createProduct(req, res, next) {
-        productService.createProduct(req.body).then(() => res.redirect('http://localhost:3001/ProductManagament'))
+        const { name, price, quantity, image, nameCategory } = req.body;
+        productService.createProduct(name, price, quantity, image, nameCategory)
+            .then(() => res.redirect('http://localhost:3001/ProductManagament'))
             .catch(next)
     }
     // xóa mềm 
@@ -33,14 +35,13 @@ class adminControler {
     // chỉnh sửa thông tin sản phẩm
     async updateProduct(req, res, next) {
         try {
-            const newInformation = req.body;
+            const newDataProduct = req.body;
             const idProduct = req.params.id;
-            const response = await productService.updateProductById(idProduct, newInformation);
+            const response = await productService.updateProductById(idProduct, newDataProduct);
             if (response.modifiedCount) {
                 return res.status(200).json();
-            } else {
-                return res.status(404).json();
             }
+            res.status(403).json()
         } catch (error) {
             next(error);
         }
@@ -50,7 +51,6 @@ class adminControler {
     async getProductInBin(req, res, next) {
         try {
             const productsInBin = await productService.getProductInBin();
-            console.log(productsInBin)
             res.status(200).json(productsInBin);
         } catch (error) {
             next(error);
@@ -85,9 +85,9 @@ class adminControler {
 
     confirmBill(req, res, next) {
         const idBill = req.params.id;
-        billService.confirmBillById(idBill).then(function (response) {
-            if (response) return res.status(200).json(response);
-            res.status(404).json({ message: "Không tìm thấy hoá đơn" });
+        billService.confirmBillById(idBill).then(function (resultUpdate) {
+            if (resultUpdate.modifiedCount) return res.status(200).json("true");
+            res.status(404).json({ message: "found" });
         }).catch(next);
     }
     async getDataMybills(req, res, next) {
@@ -100,10 +100,8 @@ class adminControler {
     }
     async addCategory(req, res, next) {
         try {
-            const response = await categoryService.addCategory(req.body);
-            if (response) {
-                res.status(200).json("thành công");
-            }
+            const resultCategory = await categoryService.addCategory(req.body);
+            res.status(200).json(resultCategory);
         } catch (error) {
             next(error);
         }
@@ -111,8 +109,8 @@ class adminControler {
 
     async myProducts(req, res, next) {
         try {
-            const products = await productService.getAllProducst();
-            res.status(200).json(products);
+            const listProducts = await productService.getAllProducst();
+            res.status(200).json(listProducts);
         } catch (error) {
             next(error);
         }
@@ -142,9 +140,8 @@ class adminControler {
             const chat = await chatService.getContenchatById(id);
             if (chat) {
                 return res.status(200).json(chat);
-            } else {
-                return res.status(404).json({ message: 'Chat not found.' });
             }
+            res.status(404).json({ message: 'Chat not found.' });
         } catch (error) {
             next(error);
         }

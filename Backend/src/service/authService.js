@@ -1,58 +1,51 @@
 const User = require("../app/models/User");
 const bcrypt = require("bcrypt")
-const secretKey = 'ID_KJ_145';
 const jwt = require('jsonwebtoken');
 const card = require("../app/models/card");
 const saltRounds = 10;
-
 class authService {
-    registerUser(password, userName, Email, phoneNumber) {
-        return new Promise((resolve, reject) => {
-
-            User.findOne({ $or: [{ userName }, { Email }, { phoneNumber }] }, { userName: 1, Email: 1, phoneNumber: 1 })
-                .then(exists => {
-                    if (exists) {
-                        const message = userName === exists.toObject().userName ? 'Tên đăng nhập đã tồn tại' :
-                            phoneNumber === exists.toObject().phoneNumber ? "Số điện thoại đã tồn tại" :
-                                "Email đã tồn tại";
-                        resolve({ message, type: false });
-                    } else {
-                        bcrypt.hash(password, saltRounds, function (err, hashPassword) {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                const newAccount = new User({ ...req.body, password: hashPassword });
-                                newAccount.save()
-                                    .then(() => resolve({ type: true, data: newAccount }))
-                                    .catch(error => reject(error));
-                            }
-                        });
-                    }
-                })
-                .catch(error => reject(error));
-        });
+    async registerUser(password, userName, Email, phoneNumber) {
+        try {
+            const exists = await User.findOne({
+                $or: [{ userName }, { Email }, { phoneNumber }]
+            }, {
+                userName: 1, Email: 1, phoneNumber: 1
+            }).lean();
+            if (exists) {
+                const message = userName === exists.userName ? 'userName is exits' :
+                    phoneNumber === exists.phoneNumber ? 'phoneNumber is exits' :
+                        'email is exits';
+                return { message, type: false };
+            }
+            console.log(password)
+            const hashPassword = await bcrypt.hash(password, saltRounds);
+            const newAccount = new User({ userName, Email, phoneNumber, passWord: hashPassword });
+            await newAccount.save();
+            return { type: true, data: newAccount };
+        } catch (error) {
+            throw error;
+        }
     }
     async checkAuthIsCorrect(userName, password) {
         try {
-            const existingUser = await User.findOne({ userName });
-            if (!existingUser) {
-                return { message: 'không tìm thấy tài khoản', status: 404 };
+            const reusltFindUser = await User.findOne({ userName });
+            if (!reusltFindUser) {
+                return { message: 'account is not found', status: 404 };
             }
-            const result = await bcrypt.compare(password, existingUser.passWord);
+            const result = await bcrypt.compare(password, reusltFindUser.passWord);
             if (!result) {
-                return { message: 'mật khẩu không chính xác', status: 401 };
+                return { message: 'password is not correct', status: 401 };
             }
-            const token = jwt.sign({ idUser: existingUser._id, role: existingUser.role }, secretKey, { expiresIn: '10h' })
+            const token = jwt.sign({ idUser: reusltFindUser._id, role: reusltFindUser.role }, process.env.SERECT_KEY, { expiresIn: '10h' })
             return { token, status: 200 };
         } catch (error) {
-            console.log(error)
-            return { message: 'đăng nhập thất bại', status: 500, error };
+            throw error
         }
     }
 
     async getStatusAuth(token) {
         try {
-            const decodedToken = jwt.verify(token, secretKey);
+            const decodedToken = jwt.verify(token, process.env.SERECT_KEY);
             const user = await User.findOne({ _id: decodedToken.idUser });
             if (!user) {
                 return { data: {}, type: false }
@@ -70,25 +63,13 @@ class authService {
             throw new Error(error)
         }
     }
-    async getInformationAccountBuyId(idUser) {
-        try {
-            const myAccount = await User.findOne({ _id: idUser }, { userName: 1, phoneNumber: 1, Email: 1, avatar: 1, name: 1 });
-            return myAccount.toObject();
-        } catch (error) {
-            throw new Error(error)
-        }
+
+    getInformationAccountBuyId(idUser) {
+        return User.findOne({ _id: idUser }, { userName: 1, phoneNumber: 1, Email: 1, avatar: 1, name: 1 });
     }
-    async saveAccountData(accountId, newData) {
-        try {
-            const response = await User.updateOne({ _id: accountId }, newData);
-            if (response.nModified > 0) {
-                return "Thành công";
-            } else {
-                throw new Error("Không tìm thấy tài khoản để cập nhật");
-            }
-        } catch (error) {
-            throw new Error(`Lỗi khi lưu dữ liệu tài khoản: ${error.message}`);
-        }
+
+    saveAccountData(accountId, newData) {
+        return User.updateOne({ _id: accountId }, newData)
     }
     async findUserById(idUser) {
         return await User.findOne({ _id: idUser }, { avatar: 1, userName: 1 })

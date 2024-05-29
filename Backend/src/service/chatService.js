@@ -5,12 +5,8 @@ const messageModel = require("../app/models/message");
 
 class chatService {
     async getChatsByUserId(userId) {
-        try {
-            const myChats = await chat.findOne({ _id: userId }, { chats: 1, _id: 1 }).sort({ updatedAt: -1 });
-            return myChats ? myChats.toObject() : null;
-        } catch (error) {
-            throw new Error(`Lỗi khi lấy danh sách trò chuyện: ${error.message}`);
-        }
+        return chat.findOne({ _id: userId }, { chats: 1, _id: 1 }).sort({ updatedAt: -1 });
+
     }
     async createNewmessage(idUser, message) {
         const newMessage = new messageModel({ _id: idUser, content: message })
@@ -46,14 +42,8 @@ class chatService {
                 return data
             })
     }
-    async getContenchatById(idChat) {
-        try {
-            const chatIsExits = await chat.findOne({ _id: idChat }, { chats: 1, _id: 1 }).sort({ updatedAt: -1 });
-            return chatIsExits ? chatIsExits.toObject() : null;
-        } catch (error) {
-            throw new Error(error);
-        }
-
+    getContenchatById(idChat) {
+        return chat.findOne({ _id: idChat }, { chats: 1, _id: 1 }).sort({ updatedAt: -1 });
     }
     async adminReplyMess(idChat, idAdmin, messageAnswer) {
         const answer = new message({ _id: idAdmin, content: messageAnswer });

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { showContext } from "../../App";
 const AllmyOder = ({ data }) => {
     const { show, setShow } = useContext(showContext)
+    console.log(data)
     return (
         <div className="container">
             {

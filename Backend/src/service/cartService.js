@@ -3,10 +3,8 @@ const product = require("../app/models/product");
 
 class cartService {
     addProductInCart(idUser, idProduct, quantity) {
-        const newCard = new card({ idProduct, idUser: idUser, quantityProduct: quantity, size: "M", });
-        return newCard.save().then(function (response) {
-            return response;
-        }).catch((err) => { throw new Error(err) })
+        return new card({ idProduct, idUser: idUser, quantityProduct: quantity, size: "M", }).save()
+
     }
 
     async getUserCartDetails(idUser) {
@@ -26,38 +24,18 @@ class cartService {
             throw new Error(`Error fetching user cart details: ${error.message}`);
         }
     }
-    async deleteProductInCart(cardId) {
-        try {
-            const response = await card.deleteOne({ _id: cardId });
-            if (response.deletedCount > 0) {
-                return "Thành công";
-            } else {
-                throw new Error("Không tìm thấy sản phẩm trong giỏ hàng");
-            }
-        } catch (error) {
-            throw new Error(`Lỗi khi xóa sản phẩm khỏi giỏ hàng: ${error.message}`);
-        }
+    deleteProductInCart(cardId) {
+        return card.deleteOne({ _id: cardId })
     }
-    async deleteCheckedProductsInCart(cardIds) {
-        try {
-            const response = await card.deleteMany({ _id: { $in: cardIds } });
-            if (response.deletedCount > 0) {
-                return "Thành công";
-            } else {
-                throw new Error("Không tìm thấy sản phẩm trong giỏ hàng để xóa");
-            }
-        } catch (error) {
-            throw new Error(`Lỗi khi xóa sản phẩm trong giỏ hàng: ${error.message}`);
-        }
+    deleteCheckedProductsInCart(cardIds) {
+        return card.deleteMany({ _id: { $in: cardIds } })
     }
 
     // tìm những giỏ hàng có chứa sp muốn tìm 
     findCartByIdProduct(idProduct) {
-        return card.find({ idProduct }, { _id: 1 }).then(resultCart => {
-            return resultCart
-        })
+        return card.find({ idProduct }, { _id: 1 });
     }
-    
+
     // xóa mềm giỏ hàng khi sản phẩm đó được xóa mềm
     async deleteCartById(idCart) {
         try {

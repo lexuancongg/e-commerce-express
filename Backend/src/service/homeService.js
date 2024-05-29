@@ -3,17 +3,15 @@ const bill = require("../app/models/bill");
 const product = require("../app/models/product");
 const category = require("../app/models/category");
 const sizeDataGet = 30;
-class homeService{
-    async getDataHomePage(page) {
+class homeService {
+    async getDataHomePage() {
         try {
-            const numberPage = page || 1;
-            const skipCount = (numberPage - 1) * sizeDataGet;
 
-            const productsPromise = product.find({}).skip(skipCount).limit(sizeDataGet);
+            const productsPromise = product.find({}).limit(sizeDataGet);
             const categoriesPromise = category.find({});
 
             const [listProducts, listCategories] = await Promise.all([productsPromise, categoriesPromise]);
-            
+
             const top3Product = await bill.aggregate([
                 {
                     $group: {
@@ -38,4 +36,4 @@ class homeService{
     }
 
 }
-module.exports =  new homeService();
+module.exports = new homeService();

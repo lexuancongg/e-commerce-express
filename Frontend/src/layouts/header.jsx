@@ -3,21 +3,12 @@ import { memo, useEffect } from 'react';
 import Chat from '../components/Header/chat';
 import ChatAdmin from '../components/Header/chatAdmin'
 const Header = ({ wsChat, setShow, show, DataAboutLoggin, SetDataAboutLoggin, quantityProductInCart }) => {
-    useEffect(() => {
-        const getDataMychat = (async () => {
-            try {
-
-            } catch (error) {
-
-            }
-        })()
-
-    })
 
     const HenDalLogOut = () => {
         localStorage.removeItem("token");
         SetDataAboutLoggin('');
         if (wsChat) wsChat.close();
+        
     }
     return (
         <div>
@@ -64,7 +55,7 @@ const Header = ({ wsChat, setShow, show, DataAboutLoggin, SetDataAboutLoggin, qu
                                         <ul class="dropdownmenu">
                                             <li><a href="/myAccount">tài khoản của tôi </a></li>
                                             <li><a href="/myOder">đơn mua </a></li>
-                                            <li><a onClick={HenDalLogOut} href="">Đăng xuất</a></li>
+                                            <li><a onClick={HenDalLogOut} href="/">Đăng xuất</a></li>
                                         </ul>
 
                                     </li>

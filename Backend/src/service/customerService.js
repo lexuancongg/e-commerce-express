@@ -8,12 +8,12 @@ class customerService {
     async updateInformation(idCustomer, newDataInformationCustomer) {
         return await curtomer.updateOne({ _id: idCustomer }, { _id: idCustomer, ...newDataInformationCustomer })
     }
-    async findCustomerBuyId(idCustomer) {
-        return await curtomer.findOne({
+    findCustomerBuyId(idCustomer) {
+        return curtomer.findOne({
             _id: idCustomer, phoneNumberOder: { $exists: true, $ne: "" }, address: { $exists: true, $ne: "" }, fullName: { $exists: true, $ne: "" }
         })
     }
 
-    
+
 }
 module.exports = new customerService();

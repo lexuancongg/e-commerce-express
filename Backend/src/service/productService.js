@@ -3,17 +3,7 @@ const card = require("../app/models/card");
 const product = require("../app/models/product");
 const customer = require("../app/models/curtomer")
 const { default: mongoose } = require('mongoose');
-
-
 class productService {
-    async updateDataWhenDeleteProducts(idProduct, next) {
-        Promise.all([bill.delete({ idProduct }), card.delete({ idProduct })])
-            .then(async function ([products_deleted, cards_deleted]) {
-            }).catch(async function () {
-                next();
-            })
-    }
-
     getInformationProductById(idProduct) {
         return Promise.all([
             product.findOne({ _id: idProduct }, { name: 1, price: 1, image: 1, quantity: 1, nameCategory: 1 }),
@@ -51,11 +41,6 @@ class productService {
         const regexPattern = arrayKeyWords.map(keyword => `(?=.*${keyword})`).join('');
         const regex = new RegExp(regexPattern, 'i');
         return product.find({ name: { $regex: regex } })
-            .then((responseSearch) => {
-                return responseSearch;
-            }).catch((error) => {
-                throw new Error(error)
-            })
 
     }
 
@@ -97,10 +82,8 @@ class productService {
             throw new Error(error);
         }
     }
-    createProduct(data) {
-        return new product(data).save({}).then(resultSaveNewProduct => {
-            return resultSaveNewProduct;
-        })
+    createProduct(name, price, quantity, image, nameCategory) {
+        return new product({ name, price, quantity, image, nameCategory }).save({});
     }
     async deleteProduct(idProduct) {
         try {
@@ -121,28 +104,17 @@ class productService {
             throw new Error(error)
         }
     }
-    async getDataProductById(idProduct) {
-        try {
-            const productData = await product.findOne({ _id: idProduct });
-            return productData;
-        } catch (error) {
-            throw new Error(error);
-        }
+    getDataProductById(idProduct) {
+        return product.findOne({ _id: idProduct },{name:1,price:1,image:1});
     }
     async updateProductById(idProduct, newData) {
-        try {
-            return await product.updateOne({ _id: idProduct }, newData);
-        } catch (error) {
-            throw new Error(error);
-        }
+        return await product.updateOne({ _id: idProduct }, newData);
     }
+
     async getProductInBin() {
-        try {
-            return await product.findDeleted({});
-        } catch (error) {
-            throw new Error(error);
-        }
+        return await product.findDeleted({});
     }
+
     async restoreProductById(idProduct) {
         try {
             const result = await product.updateOneDeleted({ _id: idProduct }, { $set: { deleted: false } });
@@ -154,13 +126,16 @@ class productService {
         }
     }
 
+    updateQuantityProduct(idProduct, quantity, type) {
+        if (type === "up") {
+            return product.updateOne({ _id: idProduct }, { $inc: { quantity: + quantity } })
+        }
+        product.updateOne({ _id: idProduct }, { $inc: { quantity: - quantity } })
+    }
+
 
     async getAllProducst() {
-        try {
-            return await product.find({});
-        } catch (error) {
-            throw new Error(error);
-        }
+        return await product.find({});
     }
     async updateDataCartAndBillWhenDeleteProduct(modelSchema, idProduct, type) {
         // tim modal chứa id sản phẩm xóa
