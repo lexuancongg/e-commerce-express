@@ -1,12 +1,11 @@
 const express = require('express');
 const route = express.Router();
 const HomeContrailer = require('../app/controllers/HomeContrailer.js');
-const authentoken = require("../security/authentication/authenToken.js")
+const authentoken = require("../middleware/security/authentication/authenticate.js")
 
 route.get('/informationProduct/:id', HomeContrailer.getInformationProduct)
 route.post('/feetback/:id', authentoken, HomeContrailer.createNewFeetback)
 route.get('/', HomeContrailer.Home);
-route.post('/newMessage', authentoken, HomeContrailer.createNewmessage)
 route.post('/register', HomeContrailer.register)
 route.post('/login', HomeContrailer.login)
 route.get('/checkLoginStatus', HomeContrailer.checkLoginStatus)

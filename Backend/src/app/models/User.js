@@ -45,6 +45,9 @@ const user = new Schema({
     avatar: {
         type: String,
         default: ""
+    },
+    name:{
+        type: String,
     }
 }, {
     // tự động tạo hai trường createdAt và updatedAt

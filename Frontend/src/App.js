@@ -39,7 +39,7 @@ function App() {
           connectWebsocket(data.role)
 
           SetDataAboutLoggin({ role: data.role, avatar: data.avatar });
-          setQuantityProductInCart(data.quantityCard);
+          setQuantityProductInCart(data.quantityProductInCart);
         } else {
           SetDataAboutLoggin({ role: false });
         }
@@ -54,7 +54,7 @@ function App() {
     (role) => {
       const wss = new WebSocket(`ws://localhost:3000/chat_${role}_${jwtDecode(token).idUser}`);
       wss.onopen = () => setWsChat(wss);
-      wss.onmessage = (event) => {  
+      wss.onmessage = (event) => {
         const data = JSON.parse(event.data)
         // dùng kiểu tham chiếu để cập nhật khi có sự thay đổi 
         const isShow = showRef.current;

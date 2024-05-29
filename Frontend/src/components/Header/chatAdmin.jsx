@@ -1,7 +1,7 @@
 import { useEffect, useContext, useRef, useState, memo } from "react";
 import getToken from "../../until/gettoken.js";
 import { wsChatContext } from "../../App.js"; // Import context từ App component
-import Modalchat from "../chatAdmin/modalchat.jsx";
+import Modalchat from "../templateChat/modalchat.jsx";
 import { jwtDecode } from "jwt-decode";
 import FindUserChat from "./chatAdmin/findUserChat.jsx";
 const ChatAdmin = () => {

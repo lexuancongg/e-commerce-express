@@ -155,6 +155,7 @@
   color: white;
   border: none;
   border-bottom: 2px solid rgb(219, 214, 214);
+  border-radius: 3px;
 }
 
 
@@ -191,9 +192,7 @@
   align-items: center;
 }
 
-.spaceFeetback .content {
-  padding-left: 20px;
-}
+
 
 .spaceFeetback {
   margin-bottom: 50px;

@@ -97,8 +97,8 @@ const Home = () => {
                             </div>
                         )}
                     </div>
-                    <Category listCategorys={data.listCategorys}></Category>
-                    <Top3Products top3Product={data.top3Product}></Top3Products>
+                    <Category listCategorys={data.listCategories}></Category>
+                    <Top3Products top3Product={data.top3ProductDetails}></Top3Products>
                     <ListProducts listProducts={data.listProducts}></ListProducts>
 
                 </div>

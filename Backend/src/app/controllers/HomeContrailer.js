@@ -1,200 +1,79 @@
 'use strict'
 const User = require('../models/User.js');
-const category = require('../models/category.js')
 const product = require('../models/product.js');
-const card = require('../models/card.js')
-const curtomer = require("../models/curtomer.js")
+
 const chat = require('../models/chat.js')
 const messageModel = require('../models/message.js')
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const { default: mongoose } = require('mongoose');
 const bill = require('../models/bill.js');
-const feetback = require('../models/feetback.js')
-const feetbackProduct = require('../models/feetbackProduct.js');
-const secretKey = 'ID_KJ_145';
-const saltRounds = 10;
-// số  lượng lấy ra từ database
+const homeService = require('../../service/homeService.js');
+const authService = require('../../service/authService.js');
+const productService = require('../../service/productService.js');
+const customerService = require('../../service/customerService.js');
+const billService = require('../../service/billService.js');
+const cartService = require('../../service/cartService.js');
+const feetbackProductService = require('../../service/feetbackProductService.js');
+const chatService = require('../../service/chatService.js');
 const sizeDataGet = 30;
-// BẢN CHẤT NHƯ SQL SEVER 
 class HomeContrailer {
     async Home(req, res, next) {
         try {
-            const products = product.find({}).skip(0).limit(sizeDataGet);
-            Promise.all([products, category.find({})]).then(async ([responseProduct, responseCategory]) => {
-                try {
-                    const top3Product = await bill.aggregateWithDeleted([
-                        {
-                            $group: {
-                                // group theo idProduct 
-                                _id: '$idProduct',
-                                // group va tinh tong
-                                totalQuantitySold: { $sum: '$quantityProduct' }
-                            }
-                        },
-                        {
-                            // sap xep theo total..: giam dan
-                            $sort: { totalQuantitySold: -1 }
-                        },
-                        { $limit: 3 }
-                    ])
-
-                    Promise.all(top3Product.map((item) => {
-                        return product.findOne({ _id: item._id }, { name: 1, image: 1 }).then((response) => response).catch(next)
-                    })).then(function (data) {
-                        res.status(200).json(
-                            {
-                                listProducts: responseProduct,
-                                listCategorys: responseCategory,
-                                top3Product: data
-                            })
-                    })
-
-                } catch (error) {
-                    next();
-                }
-            }).catch(next)
-
-        }
-        catch (err) {
-            res.status(400).send({
-                error: "erro"
-            })
-        }
-    }
-    register(req, res, next) {
-        const { passWord, userName, Email, phoneNumber } = req.body;
-        // kiểm tra xem đã có ai sử dụng các thuộc tính này chưa 
-        User.findOne({ $or: [{ userName }, { Email }, { phoneNumber }] }, { userName: 1, Email: 1, phoneNumber: 1 })
-            .then(exits => {
-                if (exits) {
-                    const message = userName === exits.toObject().userName ? 'Tên đăng nhập đã tồn tại' : phoneNumber === exits.toObject().phoneNumber ? "số điện thoại đã tồn tại" : "Email đã tồn tại";
-                    return res.status(409).json({ message });
-                }
-                else {
-                    // băm mật khẩu 
-                    bcrypt.hash(passWord, saltRounds, function (err, hashPassWord) {
-                        if (hashPassWord) { // hash mật khẩu sau khi băm 
-                            const newAccount = new User({ ...req.body, passWord: hashPassWord });
-                            newAccount.save()
-                                .then(function (response) {
-                                    return res.status(200).json(response);
-                                })
-                                .catch(next)
-                        } else {
-                            return next()
-                        }
-                    });
-                }
-            }).catch(next)
-    }
-
-
-    login(req, res, next) {
-        const { userName, passWord } = req.body;
-        User.findOne({ userName })
-            .then(responseUser => {
-
-                if (!responseUser) {
-                    return res.status(404).json({ message: 'không tìm thấy tài khoản' })
-                }
-                bcrypt.compare(passWord, responseUser.passWord, function (err, result) {
-                    if (err || !result) {
-                        return res.status(401).json({ message: 'mật khẩu không chính xác' })
-                    }
-                    const token = jwt.sign({ idUser: responseUser._id, role: responseUser.role }, secretKey, { expiresIn: '10h' }, function (err, token) {
-                        if (token) {
-                            return res.status(200).json({ token });
-                        }
-                        res.status(500).json({ message: "đănh nhập thất bại" })
-                    })
-                    // có thể lưu cooki bằng sever ở đây bằng library cooki seach cookie npm
-                })
-
-                // cách viết khác thep then
-                // bcrypt.compare(passWord, responseUser.passWord)
-                //     .then(result => {
-                //         if (result) {
-                //             res.json('đúng mật khẩu')
-                //         }
-                //     }).catch(next)
-            })
-            .catch(next)
-    }
-    getInformationProduct(req, res, next) {
-        const id_product = req.params.id;
-        Promise.all(
-            [
-                product.findOne({ _id: id_product }, { name: 1, price: 1, image: 1, quantity: 1, nameCategory: 1 }),
-                bill.aggregateWithDeleted([
-                    {
-                        $match: {
-                            idProduct: new mongoose.Types.ObjectId(id_product) // match có công dụng lọc như find kèm điều kiện => bản chất như having
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: "$idProduct",
-                            totalQuantitySold: { $sum: "$quantityProduct" },
-                        }
-                    }
-                ])
-            ]
-        ).then(([responseProduct, [responseInsertBill]]) => {
-            if (responseProduct) {
-                product.find({ nameCategory: responseProduct.nameCategory, _id: { $ne: responseProduct._id } }, { name: 1, image: 1, price: 1 })
-                    .then(responseCategory => {
-                        res.status(200).json({
-                            ...responseProduct.toObject(),
-                            totalQuantitySold: responseInsertBill?.totalQuantitySold || 0,
-                            listProductAtCategory: responseCategory
-                        })
-                    }).catch(next)
+            const dataHomePage = await homeService.getDataHomePage(req.params.page);
+            if (!!dataHomePage) {
+                return res.status(200).json(dataHomePage);
             }
+            return res.status(500).json({ message: "có lỗi xảy ra" })
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    register(req, res, next) {
+        const { password, userName, Email, phoneNumber } = req.body;
+        authService.registerUser(password, userName, Email, phoneNumber)
+            .then(result => {
+                if (result.type) {
+                    return res.status(200).json(result.data);
+                }
+                res.status(409).json(result)
+            }).catch(next)
+    }
+
+    async login(req, res, next) {
+        const { userName, passWord } = req.body;
+        try {
+            const resultCheckAccount = await authService.checkAuthIsCorrect(userName, passWord);
+            return res.status(resultCheckAccount.status).json(resultCheckAccount);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getInformationProduct(req, res, next) {
+        const idProduct = req.params.id;
+        productService.getInformationProductById(idProduct).then(informationResponse => {
+            res.status(informationResponse.status).json(informationResponse.data);
         }).catch(next)
     }
 
     checkLoginStatus(req, res, next) {
         const token = req.headers.authorization.split(" ")[1];
-        if (token) {
-            jwt.verify(token, secretKey, function (err, dataToken) {
-                if (err || !dataToken) {
-                    return res.status(401).json("chưa đăng nhập");
-                }
-                User.findOne({ _id: dataToken.idUser })
-                    .then(response => {
-                        if (response) {
-                            const user = JSON.parse(JSON.stringify(response));
-                            // lấy thông tin giỏ hàng 
-                            card.countDocuments({ idUser: dataToken.idUser })
-                                .then(responseQuantity => {
-                                    return res.status(200).json({ role: user.role === 'admin' ? 'admin' : 'user', avatar: response.avatar, quantityCard: responseQuantity });
-                                })
-                                .catch(next);
-                        } else {
-                            return res.status(401).json("chưa đăng nhập");
-                        }
-                    })
-                    .catch(next);
-            });
-        } else {
-            return res.status(401).json("chưa đăng nhập");
-        }
+        authService.getStatusAuth(token).then(result => {
+            return res.json(result.data)
+        }).catch(next)
     }
 
     payBuyProduct = async (req, res, next) => {
+        const { idUser } = req.idUser;
+        const idProduct = req.params.id;
+        const { informationBuyer, quantity, totalMoney } = req.body
         try {
-            const { idUser } = req.idUser;
-            const idProduct = req.params.id;
-
-            const customerExists = await curtomer.findOne({
-                _id: idUser, phoneNumberOder: { $exists: true, $ne: "" }, address: { $exists: true, $ne: "" }, fullName: { $exists: true, $ne: "" }
-            });
-            if (customerExists) {
-                const responseUpdate = await curtomer.updateOne({ _id: idUser }, { _id: idUser, ...req.body.informationBuyer });
+            const customerIsExists = customerService.findCustomerBuyId(idUser);
+            if (customerIsExists) {
+                customerService.updateInformation(idUser, req.body.informationBuyer)
             } else {
-                const newCustomer = new curtomer({ _id: idUser, ...req.body.informationBuyer });
-                const responseSaveNewUser = await newCustomer.save();
+                customerService.createInformationCustomer(idUser, ...req.body.informationBuyer);
             }
             const newBill = new bill(
                 {
@@ -211,229 +90,169 @@ class HomeContrailer {
             next(error);
         }
     };
-    getInformationOder(req, res, next) {
+    async getInformationOder(req, res, next) {
         const { idUser } = req.idUser
-        const _idProduct = req.params.id;
-        Promise.all([product.findOne({ _id: _idProduct }, { createdAt: 0, deleted: 0, updatedAt: 0 }), curtomer.findOne({ _id: idUser }, { createdAt: 0, deleted: 0, updatedAt: 0 })])
-            .then(function ([responseProduct, responseCurtomer]) {
-                if (responseCurtomer) {
-                    return res.status(200).json(
-                        {
-                            informationBuyer: responseCurtomer.toObject(),
-                            informationProduct: responseProduct.toObject()
-                        }
-                    )
+        const idProduct = req.params.id;
+        try {
+            const data = await productService.getProductAndCustomerInfo(idProduct, idUser);
+            return res.status(200).json(data)
 
-                }
-                return res.status(200).json(
-                    {
-                        informationBuyer: false,
-                        informationProduct: responseProduct.toObject()
-                    }
-                )
-
-            }).catch(next)
+        } catch (error) {
+            next(error);
+        }
     }
+
+
     getDataMyAccount(req, res, next) {
         const { idUser } = req.idUser;
-        Promise.all([User.findOne({ _id: idUser }, { userName: 1, phoneNumber: 1, Email: 1, avatar: 1 }), curtomer.findOne({ _id: idUser }, { fullName: 1, address: 1 })])
-            .then(function ([responseUser, responseCurtomer]) {
-                if (responseUser && responseCurtomer) {
-                    const DataMyAccount = {
-                        ...responseUser.toObject(),
-                        ...responseCurtomer.toObject(),
-                        _id: responseUser.toObject()._id
-
-                    }
-                    return res.status(200).json(DataMyAccount)
-
-                }
-            }).catch(next)
+        authService.getInformationAccountBuyId(idUser).then(myAccount => {
+            return res.status(200).json(myAccount)
+        }).catch(next)
 
     }
     SearchProducts(req, res, next) {
         const keyWord = req.body.search;
-        const arrayKeyWords = keyWord.split(" ");
-        const regexPattern = arrayKeyWords.map(keyword => `(?=.*${keyword})`).join('');
-        const regex = new RegExp(regexPattern, 'i');
-        product.find({ name: { $regex: regex } })
-            .then((responseSearch) => {
-                res.cookie('resultSearch', JSON.stringify(responseSearch));
-                res.redirect(`http://localhost:3001/ResultSearch`);
-                return;
-            })
-            .catch(next);
+        productService.findProductByName(keyWord).then(result => {
+            res.cookie('resultSearch', JSON.stringify(result));
+            res.redirect(`http://localhost:3001/ResultSearch`);
+        }).catch(next)
     }
-    getDataMyOder(req, res, next) {
+
+    async getDataMyOder(req, res, next) {
         const { idUser } = req.idUser;
-        bill.find({ idCustomer: idUser }, { idProduct: 1, totalMoney: 1, quantityProduct: 1, status: 1, createdAt: 1, deleted: 1, _id: 1 })
-            .then(function (responseMyOders) {
-                Promise.all(responseMyOders.map(function (responseMyOder, index) {
-                    return product.findOneWithDeleted({ _id: responseMyOder.idProduct }, { name: 1, image: 1, price: 1, _id: 1 })
-                        .then(function (responseProduct) {
-                            return {
-                                ...responseProduct.toObject(),
-                                ...responseMyOder.toObject(),
-                                idProduct: responseProduct._id,
-                                idBill: responseMyOder._id
-                            }
-                        }).catch(next)
-                })).then(data => res.json(data))
-                    .catch(next)
-            }).catch(next)
+        try {
+            const myOders = await billService.getInformationOderBuyIdCustomer(idUser);
+            return res.status(200).json(myOders)
+        } catch (error) {
+            next(error)
+        }
     }
     addToCart(req, res, next) {
         const { idUser } = req.idUser;
         const idProduct = req.params.id;
         const { quantity } = req.body;
-        const newProduct = new card({ idProduct, idUser: idUser, quantityProduct: quantity, size: "M", });
-        newProduct.save().then(function (response) {
-            res.status(200).json({ message: "thành công" })
+        cartService.addProductInCart(idUser, idProduct, quantity).then(result => {
+            return res.status(200).json(result)
         }).catch(next)
     }
-    myCart(req, res, next) {
+
+    async myCart(req, res, next) {
         const { idUser } = req.idUser;
-        card.find({ idUser: idUser }, { idProduct: 1, quantityProduct: 1, _id: 1 }).sort({ createdAt: -1 }).then(responsesCart => {
-            const promises = responsesCart.map(function (response) {
-                return product.findOneWithDeleted({ _id: response.idProduct }, { name: 1, price: 1, image: 1, _id: 1 })
-                    .then(product => (
-                        {
-                            idCard: response._id,
-                            ...product.toObject(),
-                            quantity: response.quantityProduct
-                        }
-                    )) 
-                    .catch(next);
-            })
-            return Promise.all(promises)
-        })
-            .then(data => res.status(200).json(data))
-            .catch(next)
+        try {
+            const cartDetails = await cartService.getUserCartDetails(idUser);
+            res.status(200).json(cartDetails);
+        } catch (error) {
+            next(error);
+        }
     }
-    saveDataAboutAccount(req, res, next) {
+    async saveDataAboutAccount(req, res, next) {
         const newDataAccount = req.body;
-        User.updateOne({ _id: newDataAccount._id }, newDataAccount)
-            .then((response) => res.status(200).json("thành công"))
-            .catch(next)
+        try {
+            const message = await authService.saveAccountData(newDataAccount._id, newDataAccount);
+            res.status(200).json(message);
+        } catch (error) {
+            next(error)
+        }
     }
-    deleteProductInCard(req, res, next) {
-        card.deleteOne({ _id: req.params.id }).then(response => {
-            if (response) return res.status(200).json("thanh cong");
+    async deleteProductInCard(req, res, next) {
+        const cardId = req.params.id;
+        try {
+            const message = await cartService.deleteProductInCart(cardId);
+            if (message === "Thành công") {
+                return res.status(200).json(message);
+            } else {
+                return res.status(404).json(message);
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+    async deletedProductCheckedInCard(req, res, next) {
+        const cardIds = req.body.idCardProductChecked;
+        try {
+            const message = await cartService.deleteCheckedProductsInCart(cardIds);
+            res.status(200).json(message);
+        } catch (error) {
+            next(error);
+        }
+    }
 
-            return res.status(404).json("that bai")
-        }).catch(next)
-    }
-    deletedProductCheckedInCard(req, res, next) {
-        card.deleteMany({ _id: { $in: req.body.idCardProductChecked } })
-            .then(response => res.status(200).json())
-            .catch(next)
-    }
-    OderProductChecked(req, res, next) {
-        const dataAboutOder = req.body.informationOderInCard;
+    async OderProductChecked(req, res, next) {
+        const orderItems = req.body.informationOderInCard;
         const { idUser } = req.idUser
-        const promises = dataAboutOder.map(item =>
-            new bill({ idCustomer: idUser, idProduct: item.idProduct, quantityProduct: item.quantity, totalMoney: item.quantity * item.price }).save()
-                .then(response => response).catch(next)
-        )
-        return Promise.all(promises).then(data => {
-            if (data.length !== 0) return res.status(200).json();
-            return res.status(404).json()
-        }).catch(next)
+        try {
+            const responses = await billService.createOrdersFromCart(idUser, orderItems);
+            if (responses.length !== 0) {
+                return res.status(200).json();
+            } else {
+                return res.status(404).json();
+            }
+        } catch (error) {
+            next(error);
+        }
 
     }
-    productAtCategory(req, res, next) {
-        product.find({ nameCategory: req.params.slug }, { name: 1, price: 1, image: 1, _id: 1 })
-            .then(response => res.status(200).json(response))
-            .catch(next)
+    async productAtCategory(req, res, next) {
+        const slug = req.params.slug;
+        try {
+            const products = await productService.getProductsByCategory(slug);
+            res.status(200).json(products);
+        } catch (error) {
+            next(error);
+        }
     }
 
     async createNewFeetback(req, res, next) {
         const { content, idUser, idProduct } = req.body;
-        console.log(idProduct)
         try {
-            const newFeetback = new feetback({ content, idUser });
-            const responseNewfeetBack = await newFeetback.save({}, { $sort: { createdAt: -1 } });
-            if (responseNewfeetBack) {
-                const personFeetback = await User.findOne({ _id: idUser }, { avatar: 1, userName: 1 })
-                const responseExist = await feetbackProduct.findOne({ _id: idProduct });
-                if (responseExist) {
-                    const responseUpdate = await feetbackProduct.updateOne(
-                        { _id: idProduct },
-                        { $set: { feetbacks: [...responseExist.feetbacks, responseNewfeetBack] } }
-                    );
-                    if (responseUpdate) return res.status(200).json({ ...newFeetback.toObject(), ...personFeetback.toObject() });
-                } else {
-                    // tạo mới cho feetback
-                    const createNewFeetbackProduct = await new feetbackProduct({ _id: idProduct, feetbacks: [responseNewfeetBack] }).save()
-                    if (createNewFeetbackProduct) return res.status(200).json({ ...newFeetback.toObject(), ...personFeetback.toObject() })
-                }
-            }
+            const resultFeetback = await feetbackProductService.createNewFeedback(content, idUser, idProduct);
+            return res.status(200).json(resultFeetback)
         } catch (error) {
             next()
         }
     }
-    getFeetBackProduct(req, res, next) {
-        feetbackProduct.findOne({ _id: req.params.id }, { feetbacks: 1 }).then(responseExist => {
-            if (!responseExist) return res.status(200).json([])
-            Promise.all(responseExist.feetbacks.map(feetback => User.findOne({ _id: feetback.idUser }, { avatar: 1, userName: 1 })
-                .then(responseUser => ({ ...responseUser.toObject(), content: feetback.content }))
-                .catch(next)
-            )).then(dataFeetback => res.status(200).json(dataFeetback))
-                .catch(next)
 
-        }).catch(next)
+
+
+    async getFeetBackProduct(req, res, next) {
+        const productId = req.params.id;
+        try {
+            const feedbacks = await feetbackProductService.getFeedbacksForProduct(productId);
+            res.status(200).json(feedbacks);
+        } catch (error) {
+            next(error);
+        }
     }
     myOderWaitConfirm(req, res, next) {
 
     }
-    canCelOder(idBill) {
-        return bill.updateOne({ _id: idBill }, { status: "cancel" }).then(responseUpdate => {
-            if (responseUpdate) return true;
-            return false
-        }).catch(() => {
-            return false
-        })
-    }
-    async createNewmessage(idUser, message) {
-        const converIduserToObjectId = (idString) => new mongoose.Types.ObjectId(idString)
-        const newMessage = new messageModel({ _id: converIduserToObjectId(idUser), content: message })
-        // kieemx tra xem từng có cuộc trò chuyện chưa
-        try {
-            const checkExistChat = await chat.findOne({ _id: converIduserToObjectId(idUser) }, { chats: 1 })
-            const informationUserChat = await User.findOne({ _id: converIduserToObjectId(idUser) }, { avatar: 1, userName: 1, _id: 1 })
-            if (checkExistChat) {
-                // thêm vào mảng
-                const checkUpdate = await chat.updateOne({ _id: converIduserToObjectId(idUser) }, { lastMessage: newMessage, $push: { chats: newMessage } });
-                // trả về số tài liệu được cập nhật
-                if (checkUpdate.modifiedCount) return { newMessage: newMessage.toObject(), lastMessage: newMessage };
-                return false;
-            }
-            // tạo mới chat
-            const newChat = await new chat({ _id: converIduserToObjectId(idUser), chats: [newMessage], lastMessage: newMessage }).save({}, { $sort: { createdAt: -1 } });
-            if (newChat) return { newMessage: newMessage.toObject(), newUserChat: informationUserChat }
-        } catch (error) {
-            return false
-        }
-    }
-    getChats(req, res, next) {
+
+
+    async getChats(req, res, next) {
         const { idUser } = req.idUser;
-        chat.findOne({ _id: idUser }, { chats: 1, _id: 1 }).sort({ updatedAt: -1 }).then(myChats => {
-            if (myChats) return res.status(200).json(myChats.toObject())
-        }).catch(next)
-    }
-    async getDatalisproductAtPage(req, res, next) {
-        const page = parseInt(req.query.page);
+
         try {
-            if (page) {
-                const listProductsAtPage = await product.find({}).skip((page - 1) * sizeDataGet).limit(sizeDataGet)
-                const numberPages = Math.ceil(await product.estimatedDocumentCount() / sizeDataGet);
-                return res.status(200).json({ listProductsAtPage, numberPages })
+            const myChats = await chatService.getChatsByUserId(idUser);
+            if (myChats) {
+                res.status(200).json(myChats);
+            } else {
+                res.status(404).json({ message: "Không tìm thấy trò chuyện." });
             }
         } catch (error) {
-            next();
+            next(error);
         }
     }
 
+
+    async getDatalisproductAtPage(req, res, next) {
+        const page = parseInt(req.query.page);
+        try {
+            const { listProductsAtPage, numberPages } = await productService.getProductListAtPage(page, sizeDataGet);
+            res.status(200).json({ listProductsAtPage, numberPages });
+        } catch (error) {
+            next(error);
+        }
+    }
 
 }
 

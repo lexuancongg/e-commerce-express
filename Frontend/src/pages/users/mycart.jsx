@@ -1,6 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import formatCurrency from "../../until/formatMoney";
+import { Link } from "react-router-dom"
 const Mycart = ({ children }) => {
     const token = localStorage.getItem("token");
     const [listProductInCart, setListProductInCart] = React.useState([]);
@@ -118,7 +119,7 @@ const Mycart = ({ children }) => {
             if (response.ok) {
                 // TẠI SAO KHI NHẤN DELETE THÌ TỰ ĐỘNG CHECKED 
                 $('.blockinput input').prop("checked", false);
-                checkboxAll.prop("checked",false)
+                checkboxAll.prop("checked", false)
                 children(prev => prev - idCardProductChecked.length)
                 return setListProductInCart(prevData => prevData.filter(item => !idCardProductChecked.includes(item.idCard)))
             }
@@ -137,7 +138,7 @@ const Mycart = ({ children }) => {
             }
             return accumulator;
         }, [])
-        
+
         fetch('http://localhost:3000/OderProductChecked', {
             method: "post", mode: 'cors',
             headers: {
@@ -154,6 +155,7 @@ const Mycart = ({ children }) => {
         // thực hiện mua hàng 
 
     }
+    console.log(listProductInCart)
 
     return (
         <div className="spaceMycart">
@@ -165,10 +167,10 @@ const Mycart = ({ children }) => {
                     return (
                         <div key={index} className="item">
                             <div className="blockinput">
-                                <input  price={product.price} id={product.idCard} onChange={handalOnchanInput} type="checkbox" />
+                                <input price={product.price} id={product.idCard} onChange={handalOnchanInput} type="checkbox" />
                             </div>
                             <div className="image">
-                                <img src={product.image} alt="" />
+                                <Link to={ `/confirmationProduct/${product._id}`}   > <img src={product.image} alt="" /></Link>
                             </div>
                             <div className="bodyContent">
                                 <div className="name">
@@ -232,7 +234,7 @@ const Mycart = ({ children }) => {
                                         return accumulator + item.price * item.quantity
                                     }
                                     return accumulator
-                                }, 0),'VND')
+                                }, 0), 'VND')
                             }
                         </span>
                         <button onClick={hanDalOderProductChecked}>Mua Hàng</button>

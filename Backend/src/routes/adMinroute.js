@@ -1,7 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const controllersAdmin = require('../app/controllers/adminControler.js');
-const authentoken = require('../security/authentication/authenToken.js');
+const authentoken = require('../middleware/security/authentication/authenticate.js');
 route.post('/create', controllersAdmin.createProduct);
 route.delete('/delete/:id', controllersAdmin.deleteProduct)
 route.put('/edit/:id', controllersAdmin.updateProduct)

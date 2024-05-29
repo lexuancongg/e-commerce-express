@@ -1,5 +1,5 @@
 import { memo, useEffect, useState, useContext, useRef } from "react"
-import getToken from "../../until/gettoken";
+import getToken from "../../until/gettoken.js";
 import { jwtDecode } from "jwt-decode";
 import { wsChatContext } from '../../App.js'
 const ModalChat = ({ setMychat, idchat, setIdchat, inforUserChat }) => {
@@ -26,7 +26,6 @@ const ModalChat = ({ setMychat, idchat, setIdchat, inforUserChat }) => {
         if (wschat) {
             wschat.onmessage = (event) => {
                 const data = JSON.parse(event.data)
-                console.log(data)
                 if (data.newMessage._id === idchat || data.newMessage._id === jwtDecode(getToken()).idUser) {
                     setContentchat(prev => [...prev, data.newMessage])
                 }

@@ -55,7 +55,7 @@ const Register = () => {
 
         }).then(data => {
             if (data) {
-                messageAction(document.querySelector('.toasts'), { type: 'succes', title: 'Succes Regites', text: data.message })
+                messageAction(document.querySelector('.toasts'), { type: 'error', title: 'Succes Regites', text: data.message })
             }
         }).catch(err => messageAction(document.querySelector('.toasts'), { type: 'error', title: 'Error regites', text: 'Đã xảy ra lỗi khi đăng kí' }))
 

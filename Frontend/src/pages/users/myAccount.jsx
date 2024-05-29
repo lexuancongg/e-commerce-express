@@ -12,68 +12,6 @@ const MyAccount = () => {
         const inputUpImage = document.querySelector("input[type=file]");
         inputUpImage.click();
     }
-    
-
-    // BỊ KÍCH THƯỚC QUÁ LỚN
-
-    // const handalSelectFile = (event) => {
-    //     const fileSelected = event.target.files[0];
-    //     if (fileSelected) {
-    //         // tạo đối tượng để đọc file
-    //         const reader = new FileReader();
-    //         // khi đọc file sang url
-    //         reader.readAsDataURL(fileSelected)
-    //         // khi đọc file xong
-    //         reader.onload = function () {
-    //             if (reader.result) {
-    //                 setDataAccount(function (prevDataAccount) {
-    //                     return {
-    //                         ...prevDataAccount,
-    //                         avatar: reader.result
-    //                     }
-    //                 })
-    //             }
-    //         }
-    //     }
-    // }
-
-// BỊ MÉO ẢNH
-
-
-    // const handalSelectFile = (event) => {
-    //     const fileSelected = event.target.files[0];
-
-    //     if (fileSelected) {
-    //         const reader = new FileReader();
-
-    //         reader.onload = function () {
-    //             const img = new Image();
-    //             img.src = reader.result;
-
-    //             img.onload = function () {
-    //                 const canvas = document.createElement('canvas');
-    //                 const ctx = canvas.getContext('2d');
-
-    //                 // Thiết lập kích thước mới (ví dụ: 300x300)
-    //                 canvas.width = 300;
-    //                 canvas.height = 300;
-
-    //                 // Vẽ lại ảnh vào canvas với kích thước mới
-    //                 ctx.drawImage(img, 0, 0, 300, 300);
-
-    //                 // Convert canvas thành dữ liệu URL và lưu vào state
-    //                 const newDataURL = canvas.toDataURL('image/jpeg', 0.8);
-
-    //                 setDataAccount((prevDataAccount) => ({
-    //                     ...prevDataAccount,
-    //                     avatar: newDataURL,
-    //                 }));
-    //             };
-    //         };
-
-    //         reader.readAsDataURL(fileSelected);
-    //     }
-    // };
 
     const handalSelectFile = (event) => {
         const fileSelected = event.target.files[0];
@@ -190,8 +128,8 @@ const MyAccount = () => {
                                     <input value={dataAccount.userName} type="text" name="nameAccount" id="" />
                                 </div>
                                 <div className="item">
-                                    <div>tên khách hàng</div>
-                                    <p>{dataAccount.fullName}</p>
+                                    <div>tên </div>
+                                    <p>{dataAccount.name}</p>
                                 </div>
                                 <div className="item">
                                     <div>Email</div>

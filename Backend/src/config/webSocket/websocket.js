@@ -1,27 +1,16 @@
 'use strict';  // bật chế độ nghiêm ngặt trong js 
 const { createServer } = require('http');
 const { WebSocketServer, WebSocket } = require('ws');
-const homeController = require('../app/controllers/HomeContrailer')
-const adminControler = require('../app/controllers/adminControler')
+const billService = require('../../service/billService');
+const chatService = require('../../service/chatService');
 const createWebsocket = (app) => {
     const connections = new Map();
-    const server = createServer(app)   
+    const server = createServer(app)
     const wss = new WebSocketServer({ server })
     const controllersWebsocket = {
-        feetback(data, id) {
-            const resultFeetback = homeController.createNewFeetback(data);
-            resultFeetback.then(result => {
-                if (result) {
-                    return wss.clients.forEach(function each(client) {
-                        if (connections.get(client) === id && client.readyState === WebSocket.OPEN) {
-                            client.send(JSON.stringify(result));
-                        }
-                    });
-                }
-            })
-        },
+       
         cancelOder(data, id, ws) {
-            const resultCancelOder = homeController.canCelOder(data.idBill);
+            const resultCancelOder = billService.cancelOrderById(data.idBill);
             resultCancelOder.then(result => {
                 if (result) {
                     return wss.clients.forEach(function each(client) {
@@ -33,7 +22,7 @@ const createWebsocket = (app) => {
             })
         },
         newMessage(data, id, ws) {
-            const createNewMessage = homeController.createNewmessage(data.idUser, data.message);
+            const createNewMessage = chatService.createNewmessage(data.idUser, data.message);
             createNewMessage.then(resultNewmessage => {
                 if (resultNewmessage) {
                     return wss.clients.forEach(function each(client) {
@@ -46,7 +35,7 @@ const createWebsocket = (app) => {
         },
         adminReply(data, id, ws) {
             const { idchat, idAdmin, answer } = data;
-            const replyMess = adminControler.adminReplyMess(idchat, idAdmin, answer)
+            const replyMess = chatService.adminReplyMess(idchat, idAdmin, answer)
             replyMess.then(responseReplly => {
                 if (responseReplly) {
                     return wss.clients.forEach(function each(client) {
@@ -57,7 +46,19 @@ const createWebsocket = (app) => {
                 }
             })
 
-        }
+        },
+        // feetback(data, id) {
+        //     const resultFeetback = homeController.createNewFeetback(data);
+        //     resultFeetback.then(result => {
+        //         if (result) {
+        //             return wss.clients.forEach(function each(client) {
+        //                 if (connections.get(client) === id && client.readyState === WebSocket.OPEN) {
+        //                     client.send(JSON.stringify(result));
+        //                 }
+        //             });
+        //         }
+        //     })
+        // }
     }
     wss.on('connection', function (ws, request) {
         const id = request.url.split('/')[1]
