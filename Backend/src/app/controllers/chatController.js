@@ -1,13 +1,5 @@
 const chatService = require('../../service/chatService')
 class chatController {
-    async getChats(req, res, next) {
-        try {
-            const data = await chatService.getChats();
-            res.status(200).json(data)
-        } catch (error) {
-            next(error)
-        }
-    }
     async getcontentChatById(req, res, next) {
         try {
             const { id } = req.params;
@@ -15,15 +7,14 @@ class chatController {
             if (chat) {
                 return res.status(200).json(chat);
             }
-            res.status(404).json({ message: 'Chat not found.' });
+            res.status(404).json([]);
         } catch (error) {
             next(error);
         }
     }
     async getChats(req, res, next) {
-        const idUser = req.user;
         try {
-            const myChats = await chatService.getChats(idUser);
+            const myChats = await chatService.getChats();
             if (myChats) {
                 return res.status(200).json(myChats);
             }
@@ -31,6 +22,13 @@ class chatController {
         } catch (error) {
             next(error);
         }
+    }
+    async getChatsByUserId(req, res, next) {
+        const { idUser } = req;
+        const contentChat = await chatService.getChatsByUserId(idUser);
+        if (contentChat)
+            return res.status(200).json(contentChat);
+        res.status(403).json("found")
     }
 }
 module.exports = new chatController()

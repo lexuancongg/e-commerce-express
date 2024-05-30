@@ -1,7 +1,6 @@
 const bill = require("../app/models/bill");
 const card = require("../app/models/card");
 const product = require("../app/models/product");
-const customer = require("../app/models/curtomer")
 const { default: mongoose } = require('mongoose');
 class productService {
     getInformationProductById(idProduct) {

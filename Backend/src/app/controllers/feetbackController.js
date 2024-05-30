@@ -1,7 +1,9 @@
 const feetbackProductService = require("../../service/feetbackProductService")
-class feetbackController{
+class feetbackController {
     async createNewFeetback(req, res, next) {
-        const { content, idUser, idProduct } = req.body;
+        const { content } = req.body;
+        const { idUser } = req;
+        const idProduct = req.params.id;
         try {
             const resultFeetback = await feetbackProductService.createNewFeedback(content, idUser, idProduct);
             return res.status(200).json(resultFeetback)

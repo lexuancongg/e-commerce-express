@@ -2,7 +2,7 @@ const cartService = require("../../service/cartService");
 
 class cartController {
     addToCart(req, res, next) {
-        const { idUser } = req.idUser;
+        const { idUser } = req;
         const idProduct = req.params.id;
         const { quantity } = req.body;
         cartService.addProductInCart(idUser, idProduct, quantity)
@@ -12,7 +12,7 @@ class cartController {
     }
 
     async getMyCart(req, res, next) {
-        const { idUser } = req.idUser;
+        const { idUser } = req;
         try {
             const cartDetails = await cartService.getMyCartByIdUser(idUser);
             res.status(200).json(cartDetails);

@@ -28,8 +28,7 @@ route.delete("/deletedProductCheckedInCard", authentoken, cartController.deleted
 route.post("/OderProductChecked", authentoken, billController.OderProductChecked)
 route.get("/productAtCategory/:slug", productController.productAtCategory)
 route.get('/feetback/:id', feetbackController.getFeetBackProduct)
-
-route.get('/mychat', authentoken, chatController.getChats)
+route.get('/mychat', authentoken, chatController.getChatsByUserId)
 route.get('/lisproductAtPage', productController.getListProductAtPage)
 
 

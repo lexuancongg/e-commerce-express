@@ -30,13 +30,11 @@ class chatService {
     getChats() {
         return chat.find({}, { _id: 1, lastMessage: 1 }).sort({ updatedAt: -1 })
             .then(chats => {
-                if (chats.length) {
-                    return Promise.all(chats.map(eachChat =>
-                        User.findOne({ _id: eachChat._id }, { userName: 1, avatar: 1 })
-                            .then(eachUser => ({ ...eachUser.toObject(), lastMessage: eachChat.lastMessage }))
-                    ))
-                }
-                return [];
+                return Promise.all(chats.map(eachChat =>
+                    User.findOne({ _id: eachChat._id }, { userName: 1, avatar: 1 })
+                        .then(eachUser => ({ ...eachUser.toObject(), lastMessage: eachChat.lastMessage }))
+                ))
+
             }).then(data => {
                 return data
             })
@@ -44,6 +42,7 @@ class chatService {
     getContenchatById(idChat) {
         return chat.findOne({ _id: idChat }, { chats: 1, _id: 1 }).sort({ updatedAt: -1 });
     }
+
     async adminReplyMess(idChat, idAdmin, messageAnswer) {
         const answer = new message({ _id: idAdmin, content: messageAnswer });
         const update = await chat.updateOne({ _id: idChat }, { lastMessage: answer, $push: { chats: answer } })
@@ -52,5 +51,6 @@ class chatService {
         }
         return false
     }
+   
 }
 module.exports = new chatService();

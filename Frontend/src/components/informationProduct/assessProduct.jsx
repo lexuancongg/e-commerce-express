@@ -24,7 +24,7 @@ const AssessProduct = ({ idProduct }) => {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ type: "feetback", content: feetback, idUser: jwtDecode(getToken()).idUser, idProduct })
+            body: JSON.stringify({ type: "feetback", content: feetback })
         }).then(response => {
             if (response.ok) return response.json()
         }).then(newFeetback => { setListFeetback(prev => [...prev, newFeetback]); setFeetback('') })

@@ -28,7 +28,7 @@ class billController {
         }
     }
     doneBuyProduct = async (req, res, next) => {
-        const { idUser } = req.idUser;
+        const { idUser } = req;
         const idProduct = req.params.id;
         const { informationBuyer, quantity, totalMoney } = req.body
 
@@ -50,7 +50,7 @@ class billController {
         }
     };
     async getInformationOder(req, res, next) {
-        const { idUser } = req.idUser
+        const { idUser } = req;
         const idProduct = req.params.id;
         try {
             const data = await billService.getProductAndCustomerInfo(idProduct, idUser);
@@ -60,7 +60,7 @@ class billController {
         }
     }
     async getMyOder(req, res, next) {
-        const { idUser } = req.idUser;
+        const { idUser } = req;
         try {
             const myOders = await billService.getInformationOderBuyIdCustomer(idUser);
             return res.status(200).json(myOders)
@@ -70,7 +70,7 @@ class billController {
     }
     async OderProductChecked(req, res, next) {
         const orderItems = req.body.informationOderInCard;
-        const { idUser } = req.idUser
+        const { idUser } = req;
         try {
             const responses = await billService.createOrdersFromCart(idUser, orderItems);
             if (responses.length !== 0) {
