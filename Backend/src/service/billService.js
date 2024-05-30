@@ -57,7 +57,7 @@ class billService {
             return false;
         }
     }
-    async getStatistics() {
+    async getAllBill() {
         try {
             const listBillsInBin = await bill.findWithDeleted({}, { deleted: 0, updatedAt: 0, deletedAt: 0, __v: 0 });
             const datas = await Promise.all(listBillsInBin.map(async (bill) => {
@@ -82,7 +82,7 @@ class billService {
     confirmBillById(idBill) {
         return bill.updateOne({ _id: idBill }, { status: 'confirm' })
     }
-    async getDataMybills() {
+    async getMybillWaitConfirm() {
         try {
             const listBills = await bill.find({ status: 'Normal' }, {
                 _id: 1, idProduct: 1, idCustomer: 1, quantityProduct: 1, totalMoney: 1, createdAt: 1
@@ -108,6 +108,24 @@ class billService {
         } catch (error) {
             throw new Error(error)
 
+        }
+    }
+    async getProductAndCustomerInfo(productId, userId) {
+        try {
+            const productInfo = await product.findOne({ _id: productId }, { createdAt: 0, deleted: 0, updatedAt: 0 });
+            const customerInfo = await customer.findOne({ _id: userId }, { createdAt: 0, deleted: 0, updatedAt: 0 });
+            if (customerInfo) {
+                return {
+                    informationBuyer: customerInfo.toObject(),
+                    informationProduct: productInfo.toObject()
+                };
+            }
+            return {
+                informationBuyer: false,
+                informationProduct: productInfo.toObject()
+            };
+        } catch (error) {
+            throw new Error(`Error fetching product and customer info: ${error.message}`);
         }
     }
 

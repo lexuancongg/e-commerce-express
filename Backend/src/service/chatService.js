@@ -4,9 +4,8 @@ const message = require("../app/models/message");
 const messageModel = require("../app/models/message");
 
 class chatService {
-    async getChatsByUserId(userId) {
+    getChatsByUserId(userId) {
         return chat.findOne({ _id: userId }, { chats: 1, _id: 1 }).sort({ updatedAt: -1 });
-
     }
     async createNewmessage(idUser, message) {
         const newMessage = new messageModel({ _id: idUser, content: message })

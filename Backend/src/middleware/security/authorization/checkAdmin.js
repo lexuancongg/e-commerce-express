@@ -13,13 +13,14 @@ passport.use(new JwtStrategy(jwtOption, function (jwt_data, done) {
             const user = JSON.parse(JSON.stringify(response))
             if (user.role === 'admin') {
                 // lỗi không có và có kết quả user : thành công và midewea tiếp theo đc thực hiện 
-                return done(null, user);
+                return done(null, jwt_data.idUser);
             }
             // done(err, result) 
             done(new Error('bạn không đủ quyền hạn'), false)
         })
         .catch(err => {
-            console.log(err)
+            done(err, null);
+            throw new Error(err)
         })
 }))
 const isAdmin = passport.authenticate('jwt', { session: false });

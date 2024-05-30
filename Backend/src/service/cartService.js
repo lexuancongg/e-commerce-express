@@ -7,7 +7,7 @@ class cartService {
 
     }
 
-    async getUserCartDetails(idUser) {
+    async getMyCartByIdUser(idUser) {
         try {
             const listCard = await card.find({ idUser }, { idProduct: 1, quantityProduct: 1, _id: 1 }).sort({ createdAt: -1 });
             const promises = listCard.map(async (cart) => {

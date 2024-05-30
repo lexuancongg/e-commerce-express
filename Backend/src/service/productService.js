@@ -44,24 +44,6 @@ class productService {
 
     }
 
-    async getProductAndCustomerInfo(productId, userId) {
-        try {
-            const productInfo = await product.findOne({ _id: productId }, { createdAt: 0, deleted: 0, updatedAt: 0 });
-            const customerInfo = await customer.findOne({ _id: userId }, { createdAt: 0, deleted: 0, updatedAt: 0 });
-            if (customerInfo) {
-                return {
-                    informationBuyer: customerInfo.toObject(),
-                    informationProduct: productInfo.toObject()
-                };
-            }
-            return {
-                informationBuyer: false,
-                informationProduct: productInfo.toObject()
-            };
-        } catch (error) {
-            throw new Error(`Error fetching product and customer info: ${error.message}`);
-        }
-    }
     async getProductsByCategory(slug) {
         try {
             return await product.find({ nameCategory: slug }, { name: 1, price: 1, image: 1, _id: 1 });
@@ -69,7 +51,7 @@ class productService {
             throw new Error(`Lỗi khi lấy sản phẩm trong danh mục: ${error.message}`);
         }
     }
-
+    
     async getProductListAtPage(page, sizeDataGet) {
         try {
             const skipCount = (page - 1) * sizeDataGet;
