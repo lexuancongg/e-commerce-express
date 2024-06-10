@@ -28,7 +28,7 @@ class authController {
             .catch(next)
     }
     getDataAccountById(req, res, next) {
-        const { idUser } = req.idUser;
+        const { idUser } = req;
         authService.getInformationAccountBuyId(idUser)
             .then(myAccount => {
                 if (!myAccount) return res.status(404).json("not found")

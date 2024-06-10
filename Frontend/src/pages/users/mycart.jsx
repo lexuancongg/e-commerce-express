@@ -71,37 +71,6 @@ const Mycart = ({ children }) => {
 
         setIsRender(prev => !prev)
     }
-
-    // ĐĂNG KÍ NGOÀI VÒNG ĐỜI CỦA REACT KHIẾN KHI RENDER LẠI THÌ LẮNG NGHE SỰ KIỆN LẠI VÀ LƯU SỰ KIỆN VÀO BỘ NHỚ GÂY NÊN LẮNG NGHE MỘT SỰ KIỆN NHIỀU LẦN VÀ CHẠY NHIỀU LẦN  
-    // CHỔ NÀY KHÔNG HIỂU SAO CÓ ĐƯỢC ELEMENT 
-    // const deleteChecked = document.querySelector(".deleteChecked");
-    // deleteChecked?.addEventListener('click', async () => {
-    //     const inputChecked = $('.blockinput input:checked');
-    //     const idCardProductChecked = Array.from(inputChecked).map(item => item.id);
-    //     // thực hiện xóa lên sever
-    //     try {
-    //         const response = await fetch('http://localhost:3000/deletedProductCheckedInCard', {
-    //             method: "delete", mode: 'cors',
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`,
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({ idCardProductChecked })
-    //         })
-    //         if (response.ok) {
-    //             // TẠI SAO KHI NHẤN DELETE THÌ TỰ ĐỘNG CHECKED 
-    //             $('.blockinput input').prop("checked", false);
-    //             children(prev => {
-    //                 console.log(prev);
-    //                 return prev;
-    //             })
-    //             return setListProductInCart(prevData => prevData.filter(item => !idCardProductChecked.includes(item.idCard)))
-    //         }
-    //         throw new Error()
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // })
     const HandelDeleteProductChecked = async () => {
         const inputChecked = $('.blockinput input:checked');
         const idCardProductChecked = Array.from(inputChecked).map(item => item.id);
@@ -117,7 +86,6 @@ const Mycart = ({ children }) => {
                 body: JSON.stringify({ idCardProductChecked })
             })
             if (response.ok) {
-                // TẠI SAO KHI NHẤN DELETE THÌ TỰ ĐỘNG CHECKED 
                 $('.blockinput input').prop("checked", false);
                 checkboxAll.prop("checked", false)
                 children(prev => prev - idCardProductChecked.length)

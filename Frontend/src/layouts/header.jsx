@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import { memo, useEffect } from 'react';
 import Chat from '../components/Header/chat';
 import ChatAdmin from '../components/Header/chatAdmin'
-const Header = ({ wsChat, setShow, show, DataAboutLoggin, SetDataAboutLoggin, quantityProductInCart }) => {
+const Header = ({props}) => {
+    const { wsChat, setShow, show, DataAboutLoggin, SetDataAboutLoggin, quantityProductInCart } = props;
 
     const HenDalLogOut = () => {
         localStorage.removeItem("token");
         SetDataAboutLoggin('');
         if (wsChat) wsChat.close();
-        
     }
     return (
         <div>

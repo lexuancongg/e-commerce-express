@@ -1,10 +1,12 @@
 import { memo, useState, useEffect } from "react"
-import compareStringsIgnoreCaseAndVietnamese from "../../../until/compareString"
+import compareStringsIgnoreCaseAndVietnamese from "../../until/compareString"
 const FindUserChat = ({ setIdchat, setFindUser, mychats }) => {
     const [resultFindUserChat, SetResultFindUserChat] = useState([])
+    
     const handalFindUserChat = (event) => {
         const { value } = event.target;
-        if (value.trim()) return SetResultFindUserChat(mychats.filter(userchat => compareStringsIgnoreCaseAndVietnamese(userchat.userName, value)))
+        if (value.trim()) 
+            return SetResultFindUserChat(mychats.filter(userchat => compareStringsIgnoreCaseAndVietnamese(userchat.userName, value)))
         return SetResultFindUserChat([]);
     }
     useEffect(() =>document.querySelector('.find input').focus())

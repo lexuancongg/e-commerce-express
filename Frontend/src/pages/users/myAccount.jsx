@@ -24,19 +24,18 @@ const MyAccount = () => {
                 img.onload = function () {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-
                     // Xác định kích thước mới (ví dụ: 300x300)
                     const newWidth = 300;
                     const newHeight = 300;
 
-                    // Tính tỷ lệ giữa kích thước mới và kích thước cũ
+                   
                     const ratio = Math.min(newWidth / img.width, newHeight / img.height);
 
-                    // Tính toán kích thước mới của ảnh
+                   
                     const targetWidth = img.width * ratio;
                     const targetHeight = img.height * ratio;
 
-                    // Đặt kích thước mới cho canvas
+                   
                     canvas.width = targetWidth;
                     canvas.height = targetHeight;
 
@@ -60,7 +59,7 @@ const MyAccount = () => {
     React.useEffect(() => {
         const fetchDataAccount = async () => {
             const responsefetchDataAccount = await fetch(`http://localhost:3000/myAccount`, {
-                method: "get",
+                method:'get',
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,7 +68,6 @@ const MyAccount = () => {
             })
             if (responsefetchDataAccount.ok) {
                 setDataAccount(await responsefetchDataAccount.json())
-                return;
             }
             throw new Error({ message: "có lỗi xảy ra khi lấy thông tin tài khoản" })
         }

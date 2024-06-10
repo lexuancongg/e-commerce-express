@@ -3,7 +3,7 @@ import getToken from "../../until/gettoken.js";
 import { wsChatContext } from "../../App.js"; // Import context từ App component
 import Modalchat from "../templateChat/modalchat.jsx";
 import { jwtDecode } from "jwt-decode";
-import FindUserChat from "./chatAdmin/findUserChat.jsx";
+import FindUserChat from "./findChat.jsx";
 const ChatAdmin = () => {
     const wschat = useContext(wsChatContext);
     const [mychats, setMychat] = useState([]);
@@ -28,7 +28,6 @@ const ChatAdmin = () => {
         if (wschat) {
             wschat.onmessage = (event) => {
                 const data = JSON.parse(event.data)
-                console.log(data)
                 if (data.newUserChat) {
                     return setMychat(prevData => [data.newUserChat, ...prevData])
                 }

@@ -11,6 +11,7 @@ import message from './until/message'
 import { jwtDecode } from 'jwt-decode';
 export const wsChatContext = createContext();
 export const showContext = createContext();
+
 function App() {
   const [DataAboutLoggin, SetDataAboutLoggin] = useState({});
   const [wsChat, setWsChat] = useState(null);
@@ -21,7 +22,7 @@ function App() {
   const showRef = useRef(show);
 
   useEffect(() => {
-    const getRiviewDataAplication = (async () => {
+    const getReviewDataAplication = (async () => {
       try {
         if (token) {
           const response = await fetch('http://localhost:3000/checkLoginStatus', {
@@ -35,11 +36,10 @@ function App() {
           if (!response.ok) {
             throw new Error('Failed to fetch');
           }
-          const data = await response.json();
-          connectWebsocket(data.role)
-
-          SetDataAboutLoggin({ role: data.role, avatar: data.avatar });
-          setQuantityProductInCart(data.quantityProductInCart);
+          const { role, avatar, quantityProductInCart } = await response.json();
+          connectWebsocket(role)
+          SetDataAboutLoggin({ role, avatar });
+          setQuantityProductInCart(quantityProductInCart);
         } else {
           SetDataAboutLoggin({ role: false });
         }
@@ -68,9 +68,8 @@ function App() {
   // if (wsChat) { : setwschat kiểu tham chiếu nên sẽ gắn địa chỉ ô nhớ wss cho wschat  nên có thể bị ghì đè nếu muốn 
   //   wsChat.onmessage = () => console.log('app')
   // }
-  // cập nhật sự thay đổi của địa chỉ ô nhớ
   useEffect(() => {
-    showRef.current = show; // Cập nhật giá trị của showRef mỗi khi show thay đổi
+    showRef.current = show;
   }, [show]);
   return (
     <>
@@ -81,8 +80,8 @@ function App() {
       ) : (
         <wsChatContext.Provider value={wsChat}>
           <div className='toasts'></div>
-          <Header wsChat={wsChat} show={show} setShow={setShow} DataAboutLoggin={DataAboutLoggin} SetDataAboutLoggin={SetDataAboutLoggin} quantityProductInCart={quantityProductInCart} />
-          <showContext.Provider value={{ show: show, setShow }}>
+          <Header props={{ wsChat, show, setShow, DataAboutLoggin, SetDataAboutLoggin, quantityProductInCart }} />
+          <showContext.Provider value={{ show, setShow }}>
             <Routes>
               {Routers.map((router, index) => (
                 <Route key={index} path={router.path} element={router.element}></Route>
