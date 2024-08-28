@@ -1,0 +1,42 @@
+{
+  "name": "backendawesomeproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "beautiful": "prettier 'src/**/*.{js,json}' --write --single-quote --trailing-comma all ",
+    "start": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "node-sass --watch src/resourse/scss/app.scss src/public/css/app.css "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.5",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "husky": "^8.0.3",
+    "jsonwebtoken": "^9.0.2",
+    "lint-staged": "^15.1.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^7.2.4",
+    "mongoose-delete": "^1.0.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "prettier": "^3.1.0",
+    "twilio": "^5.1.0",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "mongoose-slug-generator": "^1.0.4",
+    "morgan": "^1.10.0",
+    "node-sass": "^9.0.0",
+    "nodemon": "^3.0.1"
+  }
+}
